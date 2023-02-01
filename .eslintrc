@@ -78,6 +78,7 @@
     "prefer-const": "warn",
     "quotes": ["off", "double"],
     "react-hooks/exhaustive-deps": "error",
+    "react/prop-types": "off",
     "require-await": "warn",
     "semi": ["warn", "always"],
     "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }]
