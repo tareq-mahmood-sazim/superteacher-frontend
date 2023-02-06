@@ -25,23 +25,27 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "prettier", "react", "autofix", "react-hooks"],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "react",
+    "autofix",
+    "react-hooks",
+    "eslint-plugin-import-helpers"
+  ],
   "root": true,
   "rules": {
     "arrow-body-style": ["error", "as-needed"],
     "eqeqeq": ["error", "always"],
-    "import/order": [
-      "error",
+    "import-helpers/order-imports": [
+      "warn",
       {
-        "groups": ["builtin", "external", "parent", "sibling", "index", "object", "type"],
-        "pathGroups": [
-          {
-            "pattern": "@/**/**",
-            "group": "parent",
-            "position": "before"
-          }
-        ],
-        "alphabetize": { "order": "asc" }
+        "newlinesBetween": "always",
+        "groups": ["/next.*/", ["module"], ["absolute"]],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
       }
     ],
     "indent": ["error", 2],
