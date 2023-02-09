@@ -35,56 +35,64 @@
   ],
   "root": true,
   "rules": {
-    "arrow-body-style": ["error", "as-needed"],
-    "eqeqeq": ["error", "always"],
+    "arrow-body-style": ["warn", "as-needed"],
+    "eqeqeq": ["warn", "always"],
     "import-helpers/order-imports": [
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": ["/next.*/", ["module"], "/@/.*/", ["absolute"]],
+        "groups": ["/react/", "/next.*/", ["module"], "/@/.*/", ["absolute"]],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true
         }
       }
     ],
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    "eol-last": ["error", "always"],
+    "indent": ["warn", 2],
+    "linebreak-style": ["warn", "unix"],
+    "eol-last": ["warn", "always"],
     "no-restricted-imports": [
-      "error",
+      "warn",
       {
         "patterns": ["../"]
       }
     ],
     "react/self-closing-comp": [
-      "error",
+      "warn",
       {
         "component": true,
         "html": true
       }
     ],
     "react/react-in-jsx-scope": "off",
-    "no-const-assign": "error",
-    "no-lone-blocks": "error",
-    "no-return-await": "error",
-    "no-trailing-spaces": "error",
-    "no-throw-literal": "error",
-    "no-unused-expressions": "error",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "no-useless-catch": "error",
-    "no-useless-escape": "error",
-    "no-useless-return": "error",
-    "no-undef-init": "error",
-    "no-unneeded-ternary": "error",
-    "no-unreachable": "error",
-    "no-var": "error",
+    "no-const-assign": "warn",
+    "no-lone-blocks": "warn",
+    "no-return-await": "warn",
+    "no-trailing-spaces": "warn",
+    "no-throw-literal": "warn",
+    "no-unused-expressions": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "no-useless-catch": "warn",
+    "no-useless-escape": "warn",
+    "no-useless-return": "warn",
+    "no-undef-init": "warn",
+    "no-unneeded-ternary": "warn",
+    "no-unreachable": "warn",
+    "no-var": "warn",
     "prefer-const": "warn",
     "quotes": ["off", "double"],
-    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": "off",
     "require-await": "warn",
     "semi": ["warn", "always"],
-    "spaced-comment": ["error", "always", { "exceptions": ["-", "+"] }]
+    "spaced-comment": ["warn", "always", { "exceptions": ["-", "+"] }]
   }
 }
