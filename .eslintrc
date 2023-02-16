@@ -41,7 +41,7 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": ["/react/", "/next.*/", ["module"], "/@/.*/", ["absolute"]],
+        "groups": ["/^react$/", "/next.*/", ["module"], "/@/.*/", ["absolute"]],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true
