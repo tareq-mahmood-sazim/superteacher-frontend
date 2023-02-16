@@ -48,7 +48,6 @@
         }
       }
     ],
-    "indent": ["warn", 2],
     "linebreak-style": ["warn", "unix"],
     "eol-last": ["warn", "always"],
     "no-restricted-imports": [
