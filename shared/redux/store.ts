@@ -2,15 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query/react";
 
 import authenticatedUserSliceReducer from "./reducers/user.reducer";
-import { exampleApi } from "./rtk-apis/example/example.api";
+import projectApi from "./rtk-apis/api.config";
 
 export const store = configureStore({
   reducer: {
     authenticatedUser: authenticatedUserSliceReducer,
-    [exampleApi.reducerPath]: exampleApi.reducer,
+    [projectApi.reducerPath]: projectApi.reducer,
   },
 
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(exampleApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(projectApi.middleware),
 });
 
 setupListeners(store.dispatch);
