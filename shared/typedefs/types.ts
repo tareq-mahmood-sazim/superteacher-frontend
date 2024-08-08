@@ -1,3 +1,8 @@
+import { PropsWithChildren } from "react";
+
+import { NextPage } from "next";
+import { AppProps } from "next/app";
+
 export type TApiResponse<TData> = {
   statusCode: number;
   message: string;
@@ -34,3 +39,13 @@ export type DeepPartial<T> = {
 };
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+export type NextApplicationPage<P = unknown, IP = P> = NextPage<P, IP> & {
+  Guard?: (props: PropsWithChildren) => JSX.Element;
+  Layout?: (props: PropsWithChildren) => JSX.Element;
+};
+
+export type TCustomAppProps<P = unknown> = AppProps & {
+  Component: NextApplicationPage;
+  pageProps: P;
+};

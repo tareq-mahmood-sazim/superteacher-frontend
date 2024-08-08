@@ -1,8 +1,3 @@
-import { PropsWithChildren } from "react";
-
-import { NextPage } from "next";
-import { AppProps } from "next/app";
-
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
@@ -11,16 +6,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import AppInitializer from "@/shared/components/wrappers/AppInitializer";
 import { store } from "@/shared/redux/store";
 import { appTheme } from "@/shared/themes/themes";
-
-export type NextApplicationPage<P = unknown, IP = P> = NextPage<P, IP> & {
-  Guard?: (props: PropsWithChildren) => JSX.Element;
-  Layout?: (props: PropsWithChildren) => JSX.Element;
-};
-
-type TCustomAppProps<P = unknown> = AppProps & {
-  Component: NextApplicationPage;
-  pageProps: P;
-};
+import { TCustomAppProps } from "@/shared/typedefs";
 
 export default function App(props: TCustomAppProps) {
   const { Component, pageProps } = props;
