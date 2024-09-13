@@ -4,7 +4,6 @@ import { Button } from "@mantine/core";
 import RegistrationModal from "@/shared/components/Modals/RegistrationModal";
 import NextHead from "@/shared/components/NextHead";
 
-
 export default function Home() {
   return (
     <>

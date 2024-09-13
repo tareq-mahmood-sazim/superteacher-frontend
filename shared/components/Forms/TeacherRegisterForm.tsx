@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import {
@@ -13,7 +12,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
-export default function RegisterStudentForm (){
+export default function RegisterStudentForm() {
   const textColor = { color: "green" };
   const form = useForm({
     initialValues: {
@@ -188,4 +187,4 @@ export default function RegisterStudentForm (){
       </Group>
     </Container>
   );
-};
+}
