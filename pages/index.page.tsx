@@ -8,15 +8,7 @@ export default function Home() {
   return (
     <>
       <NextHead />
-      <div
-        style={{
-          backgroundColor: "#141932",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div className="bg-[#141932] h-screen flex justify-center items-center">
         <Container style={{ textAlign: "center" }}>
           <Title order={1} style={{ color: "white", fontSize: "2rem", marginBottom: "0.5rem" }}>
             WELCOME TO SUPERTEACHER

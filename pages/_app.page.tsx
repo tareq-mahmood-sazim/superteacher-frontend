@@ -7,7 +7,7 @@ import AppInitializer from "@/shared/components/wrappers/AppInitializer";
 import { store } from "@/shared/redux/store";
 import { appTheme } from "@/shared/themes/themes";
 import { TCustomAppProps } from "@/shared/typedefs";
-
+import "../styles/globals.css";
 export default function App(props: TCustomAppProps) {
   const { Component, pageProps } = props;
 

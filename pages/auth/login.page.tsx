@@ -1,77 +1,71 @@
 import React from "react";
-import { useState } from "react";
 
-import dynamic from "next/dynamic";
+import Link from "next/link";
 
-import { Modal, Card, Group, Text, Container, Title, CloseButton } from "@mantine/core";
+import { TextInput, PasswordInput, Button, Group } from "@mantine/core";
+import { useForm } from "@mantine/form";
 
-const CiUser = dynamic(() => import("react-icons/ci").then((mod) => mod.CiUser), { ssr: false });
-const FaChalkboardTeacher = dynamic(
-  () => import("react-icons/fa").then((mod) => mod.FaChalkboardTeacher),
-  { ssr: false },
-);
+import RegistrationModalAsLink from "@/shared/components/Modals/RegistrationModalAsLink";
+const Login = () => {
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+    },
 
-function RoleSelectionModal() {
-  const [opened, setOpened] = useState(true);
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      password: (value) =>
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)
+          ? null
+          : "Password must be stronger",
+    },
+  });
+
+  const handleSubmit = (values: { email: string; password: string }) => {
+    console.log("Login values:", values);
+  };
 
   return (
-    <Modal
-      opened={opened}
-      onClose={() => setOpened(false)}
-      withCloseButton={false}
-      centered
-      size="sm"
-      padding="xl"
-    >
-      <Container>
-        <Group position="apart">
-          <Title order={3} style={{ fontSize: "1.5rem", fontWeight: 500 }}>
-            Choose your role
-          </Title>
-          <CloseButton onClick={() => setOpened(false)} />
-        </Group>
-        <Group position="center" mt="xl" spacing="xl">
-          <Card
-            shadow="md"
-            padding="lg"
-            radius="md"
-            style={{
-              cursor: "pointer",
-              border: "1px solid #e0e0e0",
-              width: "150px",
-              height: "200px",
-            }}
-          >
-            <Group position="center">
-              <CiUser size={40} />
-              <Text weight={500} size="lg">
-                Student
-              </Text>
-            </Group>
-          </Card>
+    <div className="flex items-center justify-center w-screen h-screen bg-[#141A32]">
+      <div className="w-full max-w-md p-6 bg-[#141A32] rounded-lg">
+        <h2 className="text-center text-2xl font-semibold text-green-500 mb-6">Login</h2>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <TextInput
+            label="Email"
+            placeholder="your@email.com"
+            {...form.getInputProps("email")}
+            classNames={{ label: "text-green-500" }}
+            required
+          />
 
-          <Card
-            shadow="md"
-            padding="lg"
-            radius="md"
-            style={{
-              cursor: "pointer",
-              border: "1px solid #e0e0e0",
-              width: "150px",
-              height: "200px",
-            }}
-          >
-            <Group position="center">
-              <FaChalkboardTeacher size={40} />
-              <Text weight={500} size="lg">
-                Teacher
-              </Text>
-            </Group>
-          </Card>
-        </Group>
-      </Container>
-    </Modal>
+          <PasswordInput
+            label="Password"
+            placeholder="Your password"
+            mt="md"
+            {...form.getInputProps("password")}
+            classNames={{ label: "text-green-500" }}
+            required
+          />
+
+          <Group position="center" mt="xl">
+            <Button type="submit" color="green">
+              Submit
+            </Button>
+          </Group>
+
+          <div className="flex flex-col items-center mt-6">
+            <Link href="/auth/forgotPassword" className="text-green-500">
+              Forgot Password?
+            </Link>
+            <p className="text-green-500 mt-8">
+              Don&apos;t have an account? <RegistrationModalAsLink />
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
   );
-}
+};
 
-export default RoleSelectionModal;
+export default Login;

@@ -1,5 +1,7 @@
 import React from "react";
 
+import Link from "next/link";
+
 import {
   TextInput,
   PasswordInput,
@@ -9,35 +11,48 @@ import {
   Container,
   Title,
   Grid,
+  MultiSelect,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
-export default function RegisterStudentForm() {
+export default function RegisterTeacherForm() {
   const textColor = { color: "green" };
+  const [attemptsLeft, setAttemptsLeft] = React.useState<number>(3);
+  const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
   const form = useForm({
     initialValues: {
+      uniqueCode: "",
       firstName: "",
       lastName: "",
       gender: "",
-      address: "",
-      phoneNumber: "",
-      educationLevel: "School",
-      medium: "",
-      class: "",
+      highestEducationLevel: "School",
+      majorsubject: "",
+      subjectsToTeach: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
 
     validate: {
+      uniqueCode: (value) => {
+        if (!value) {
+          return "Unique Code is required";
+        }
+        if (value !== "expectedCode") {
+          setAttemptsLeft((prev: number): number => prev - 1);
+          if (attemptsLeft - 1 <= 0) {
+            setIsDisabled(true);
+          }
+          return "Invalid Unique Code";
+        }
+        return null;
+      },
       firstName: (value) => (value ? null : "First name is required"),
       lastName: (value) => (value ? null : "Last name is required"),
       gender: (value) => (value ? null : "Gender is required"),
-      address: (value) => (value ? null : "Address is required"),
-      phoneNumber: (value) =>
-        /^\d+$/.test(value) ? null : "Phone number is required and should be digits only",
-      medium: (value) => (value ? null : "Medium is required"),
-      class: (value) => (value ? null : "Class is required"),
+      majorsubject: (value) => (value ? null : "Major subject is required"),
+      highestEducationLevel: (value) => (value ? null : "Highest education level is required"),
+      subjectsToTeach: (value) => (value ? null : "Subjects to teach is required"),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       password: (value) => (value.length >= 6 ? null : "Password must have at least 6 characters"),
       confirmPassword: (value, values) =>
@@ -47,15 +62,27 @@ export default function RegisterStudentForm() {
 
   return (
     <Container
-      size="sm"
+      size="md"
       px="xs"
       style={{ padding: "20px", borderRadius: "8px", marginTop: "2rem" }}
     >
       <Title order={2} align="center" style={{ color: "#5CAA70", marginBottom: "20px" }}>
-        REGISTER AS A STUDENT
+        REGISTER AS A TEACHER
       </Title>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <Grid gutter="sm" align="center">
+        <TextInput
+          label="Unique Code"
+          placeholder="Unique Code"
+          {...form.getInputProps("uniqueCode")}
+          disabled={isDisabled}
+          required
+          mt="sm"
+          styles={{ label: textColor }}
+        />
+        <div style={{ color: isDisabled ? "red" : "white", marginBottom: "10px" }}>
+          {isDisabled ? "No attempts left" : `Attempts remaining: ${attemptsLeft}`}
+        </div>
+        <Grid gutter="md" align="center">
           <Grid.Col span={4}>
             <TextInput
               label="First name"
@@ -85,56 +112,36 @@ export default function RegisterStudentForm() {
             />
           </Grid.Col>
         </Grid>
-        <Grid gutter="sm">
-          <Grid.Col span={8}>
-            <TextInput
-              label="Address"
-              placeholder="Enter your address"
-              {...form.getInputProps("address")}
-              required
-              styles={{ label: textColor }}
-            />
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <TextInput
-              label="Phone number"
-              placeholder="Enter your phone number"
-              {...form.getInputProps("phoneNumber")}
-              required
-              styles={{ label: textColor }}
-            />
-          </Grid.Col>
-        </Grid>
 
         <Grid gutter="sm">
           <Grid.Col span={6}>
-            <Select
-              label="Education level"
-              data={["School", "College", "University"]}
-              {...form.getInputProps("educationLevel")}
+            <TextInput
+              label="Major Subject"
+              {...form.getInputProps("majorsubject")}
               required
               styles={{ label: textColor }}
             />
           </Grid.Col>
           <Grid.Col span={6}>
             <Select
-              label="English/Bangla Medium"
-              placeholder="Select medium"
-              data={["English", "Bangla"]}
-              {...form.getInputProps("medium")}
+              label="Highest Education Level"
+              placeholder="Education..."
+              data={["Diploma", "Honors", "M.Phil", "Masters", "PhD"]}
+              {...form.getInputProps("highestEducationLevel")}
               required
               styles={{ label: textColor }}
             />
           </Grid.Col>
         </Grid>
 
-        <TextInput
-          label="Class"
-          placeholder="Select class"
-          {...form.getInputProps("class")}
-          required
-          mt="sm"
+        <MultiSelect
+          label="Subjects to teach"
+          placeholder="Pick value"
+          data={["React", "Angular", "Vue", "Svelte", "Math", "Science", "English", "Physics"]}
+          searchable
           styles={{ label: textColor }}
+          {...form.getInputProps("subjectsToTeach")}
+          required
         />
 
         <TextInput
@@ -178,11 +185,11 @@ export default function RegisterStudentForm() {
       </form>
 
       <Group position="center" mt="md">
-        <div style={{ color: "green", fontSize: "14px", textAlign: "center" }}>
+        <div className="text-green-500 text-[14px] text-center">
           Already have an account?{" "}
-          <a href="/login" style={{ color: "#aaaaaa" }}>
+          <Link href="/auth/login" style={{ color: "#aaaaaa" }}>
             Login
-          </a>
+          </Link>
         </div>
       </Group>
     </Container>

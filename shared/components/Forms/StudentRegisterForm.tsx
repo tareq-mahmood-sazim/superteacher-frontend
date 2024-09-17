@@ -180,7 +180,7 @@ export default function RegisterStudentForm() {
       <Group position="center" mt="md">
         <div style={{ color: "green", fontSize: "14px", textAlign: "center" }}>
           Already have an account?{" "}
-          <a href="/login" style={{ color: "#aaaaaa" }}>
+          <a href="/auth/login" style={{ color: "#aaaaaa" }}>
             Login
           </a>
         </div>
