@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 
 import { Loader, Center } from "@mantine/core";
 
-const RegisterStudentForm = dynamic(() => import("@/shared/components/Forms/StudentRegisterForm"), {
+const RegisterTeacherForm = dynamic(() => import("@/shared/components/Forms/TeacherRegisterForm"), {
   ssr: false,
   loading: () => (
     <Center style={{ height: "100vh" }}>
@@ -21,7 +21,7 @@ export default function register() {
         width: "100vw",
       }}
     >
-      <RegisterStudentForm />
+      <RegisterTeacherForm />
     </div>
   );
 }
