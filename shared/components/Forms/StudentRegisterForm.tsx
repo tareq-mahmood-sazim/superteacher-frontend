@@ -11,8 +11,12 @@ import {
   Grid,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
+
+import { useCreateStudentMutation } from "@/shared/redux/rtk-apis/students/students.api";
 
 export default function RegisterStudentForm() {
+  const [createStudent, { isLoading: isCreatingStudent }] = useCreateStudentMutation();
   const textColor = { color: "green" };
   const form = useForm({
     initialValues: {
@@ -44,6 +48,30 @@ export default function RegisterStudentForm() {
         value === values.password ? null : "Passwords do not match",
     },
   });
+  const handleSubmit = async (values: typeof form.values) => {
+    try {
+      // Call the RTK mutation
+      const response = await createStudent(values).unwrap();
+
+      // Show success notification
+      showNotification({
+        title: "Success",
+        message: response?.message ?? "Teacher registered successfully",
+        color: "green",
+      });
+
+      console.log("Teacher created:", response);
+    } catch (error) {
+      // Show error notification
+      showNotification({
+        title: "Error",
+        message: "Failed to register the teacher.",
+        color: "red",
+      });
+
+      console.error("Error registering teacher:", error);
+    }
+  };
 
   return (
     <Container
@@ -54,7 +82,7 @@ export default function RegisterStudentForm() {
       <Title order={2} align="center" style={{ color: "#5CAA70", marginBottom: "20px" }}>
         REGISTER AS A STUDENT
       </Title>
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Grid gutter="sm" align="center">
           <Grid.Col span={4}>
             <TextInput
@@ -171,7 +199,7 @@ export default function RegisterStudentForm() {
           <Button type="reset" color="gray" onClick={() => form.reset()}>
             Reset
           </Button>
-          <Button type="submit" color="green">
+          <Button type="submit" color="green" disabled={isCreatingStudent}>
             Submit
           </Button>
         </Group>

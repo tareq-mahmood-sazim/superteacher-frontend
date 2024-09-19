@@ -14,8 +14,11 @@ import {
   MultiSelect,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 
+import { useCreateTeacherMutation } from "@/shared/redux/rtk-apis/teachers/teachers.api";
 export default function RegisterTeacherForm() {
+  const [createTeacher, { isLoading: isCreatingTeacher }] = useCreateTeacherMutation();
   const textColor = { color: "green" };
   const [attemptsLeft, setAttemptsLeft] = React.useState<number>(3);
   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
@@ -38,7 +41,7 @@ export default function RegisterTeacherForm() {
         if (!value) {
           return "Unique Code is required";
         }
-        if (value !== "expectedCode") {
+        if (value !== "1234") {
           setAttemptsLeft((prev: number): number => prev - 1);
           if (attemptsLeft - 1 <= 0) {
             setIsDisabled(true);
@@ -59,17 +62,38 @@ export default function RegisterTeacherForm() {
         value === values.password ? null : "Passwords do not match",
     },
   });
+  const handleSubmit = async (values: typeof form.values) => {
+    try {
+      const response = await createTeacher(values).unwrap();
 
+      showNotification({
+        title: "Success",
+        message: response?.message ?? "Teacher registered successfully",
+        color: "green",
+      });
+
+      console.log("Teacher created:", response);
+    } catch (error) {
+      showNotification({
+        title: "Error",
+        message: "Failed to register the teacher.",
+        color: "red",
+      });
+
+      console.error("Error registering teacher:", error);
+    }
+  };
   return (
-    <Container
-      size="md"
-      px="xs"
-      style={{ padding: "20px", borderRadius: "8px", marginTop: "2rem" }}
-    >
-      <Title order={2} align="center" style={{ color: "#5CAA70", marginBottom: "20px" }}>
+    <Container size="md" px="xs" className="p-[20px] rounded-sm mt-[2rem]">
+      <Title
+        order={2}
+        align="center"
+        style={{ color: "#5CAA70", marginBottom: "20px" }}
+        className="mb-[20px] text-green-500"
+      >
         REGISTER AS A TEACHER
       </Title>
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <TextInput
           label="Unique Code"
           placeholder="Unique Code"
@@ -178,7 +202,7 @@ export default function RegisterTeacherForm() {
           <Button type="reset" color="gray" onClick={() => form.reset()}>
             Reset
           </Button>
-          <Button type="submit" color="green">
+          <Button type="submit" color="green" disabled={isCreatingTeacher}>
             Submit
           </Button>
         </Group>
@@ -187,7 +211,7 @@ export default function RegisterTeacherForm() {
       <Group position="center" mt="md">
         <div className="text-green-500 text-[14px] text-center">
           Already have an account?{" "}
-          <Link href="/auth/login" style={{ color: "#aaaaaa" }}>
+          <Link href="/auth/login" className="text-slate-400">
             Login
           </Link>
         </div>

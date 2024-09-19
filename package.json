@@ -14,7 +14,8 @@
     "prettier:format": "npx prettier --write ./",
     "prepare": "husky install",
     "test": "jest",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "dev:prepare": "eslint:lint && prettier:format && lint-staged"
   },
   "lint-staged": {
     "./**/*.{ts,tsx}": "eslint --fix --max-warnings=0"
