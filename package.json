@@ -15,7 +15,7 @@
     "prepare": "husky install",
     "test": "jest",
     "lint-staged": "lint-staged",
-    "dev:prepare": "eslint:lint && prettier:format && lint-staged"
+    "dev:prepare": "yarn eslint:lint && yarn prettier:format && yarn lint-staged && yarn build"
   },
   "lint-staged": {
     "./**/*.{ts,tsx}": "eslint --fix --max-warnings=0"

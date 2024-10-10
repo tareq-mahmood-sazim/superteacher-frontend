@@ -1,6 +1,6 @@
 import projectApi from "../api.config";
 
-const STUDENTS_ENDPOINT = "/student-list";
+const STUDENTS_ENDPOINT = "/users";
 
 const studentsApi = projectApi.injectEndpoints({
   endpoints: (builder) => ({

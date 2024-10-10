@@ -23,6 +23,7 @@ const AppInitializer = ({ children }: PropsWithChildren) => {
       })
       .catch((err) => {
         console.log(err);
+        // todo -> get LoggedInAs profile
         // const errorMessage = parseApiErrorMessage(err);
 
         // showNotification({

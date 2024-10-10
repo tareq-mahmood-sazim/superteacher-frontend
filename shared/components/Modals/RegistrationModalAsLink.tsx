@@ -35,7 +35,7 @@ export default function RegistrationModal() {
               padding="lg"
               radius="md"
               component="a"
-              href="register/studentRegister"
+              href="/register/studentRegister"
               style={{
                 cursor: "pointer",
                 border: "1px solid #e0e0e0",
@@ -56,7 +56,7 @@ export default function RegistrationModal() {
               padding="lg"
               radius="md"
               component="a"
-              href="register/teacherRegister"
+              href="/register/teacherRegister"
               style={{
                 cursor: "pointer",
                 border: "1px solid #e0e0e0",

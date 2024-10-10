@@ -7,13 +7,13 @@ export const getLoginUrlWithRedirectParam = (redirectTo: string) => {
   return url.toString();
 };
 
-export const getDefaultAllowedRolesInLoggedInRoute = (): EUserRole[] => [EUserRole.ADMIN];
+export const getDefaultAllowedRolesInLoggedInRoute = (): EUserRole[] => [EUserRole.STUDENT];
 
 export const getRoleBasedDefaultRouteAfterLogin = (role: EUserRole) => {
   switch (role) {
-    case EUserRole.SUPER_USER:
+    case EUserRole.TEACHER:
       return SUPER_USER_DASHBOARD_ROUTE;
-    case EUserRole.ADMIN:
+    case EUserRole.STUDENT:
       return HOME_ROUTE;
     default:
       return "/";

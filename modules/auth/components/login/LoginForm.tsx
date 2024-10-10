@@ -3,28 +3,23 @@ import React from "react";
 import Link from "next/link";
 
 import { TextInput, PasswordInput, Button, Group } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 
 import RegistrationModalAsLink from "@/shared/components/Modals/RegistrationModalAsLink";
 import { NOTIFICATION_AUTO_CLOSE_TIMEOUT_IN_MILLISECONDS } from "@/shared/constants/app.constants";
 import { useLoginMutation } from "@/shared/redux/rtk-apis/auth/auth.api";
 
-const Login = () => {
+import { loginSchema } from "./helpers/login.validation";
+
+export default function LoginForm() {
   const [login, { isLoading }] = useLoginMutation();
   const form = useForm({
     initialValues: {
       email: "",
       password: "",
     },
-
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) =>
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)
-          ? null
-          : "Password must be stronger",
-    },
+    validate: zodResolver(loginSchema),
   });
 
   const handleSubmit = async (values: { email: string; password: string }) => {
@@ -48,8 +43,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-[#141A32]">
-      <div className="w-full max-w-md p-6 bg-[#141A32] rounded-lg">
+    <div className="flex items-center justify-center w-screen h-screen">
+      <div className="w-full max-w-md p-6 rounded-lg">
         <h2 className="text-center text-2xl font-semibold text-green-500 mb-6">Login</h2>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
@@ -87,6 +82,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}
