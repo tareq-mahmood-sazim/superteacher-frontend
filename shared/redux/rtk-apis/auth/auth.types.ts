@@ -4,8 +4,8 @@ export type TLoginRequestFields = {
 };
 
 export enum EUserRole {
-  ADMIN = "ADMIN",
-  SUPER_USER = "SUPER_USER",
+  STUDENT = "STUDENT",
+  TEACHER = "TEACHER",
 }
 
 export type TTokenizedUser = {
