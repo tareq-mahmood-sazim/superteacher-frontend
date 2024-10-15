@@ -21,7 +21,6 @@ const useLoginSubmission = () => {
         showNotification(NotificationMessage("Success", "Logged in successfully"));
         setInLocalStorage("accessToken", response.accessToken);
         setUser(response.user);
-        console.log(response);
         router.push("/dashboard/home");
       } else {
         showNotification(NotificationMessage("Warning", "Wrong Email or Password"));
