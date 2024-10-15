@@ -4,16 +4,14 @@ import Link from "next/link";
 
 import { TextInput, PasswordInput, Button, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { showNotification } from "@mantine/notifications";
 
 import RegistrationModalAsLink from "@/shared/components/Modals/RegistrationModalAsLink";
-import { NOTIFICATION_AUTO_CLOSE_TIMEOUT_IN_MILLISECONDS } from "@/shared/constants/app.constants";
-import { useLoginMutation } from "@/shared/redux/rtk-apis/auth/auth.api";
 
 import { loginSchema } from "./helpers/login.validation";
+import loginSubmission from "./hooks/submission.hook";
 
 export default function LoginForm() {
-  const [login, { isLoading }] = useLoginMutation();
+  const { handleSubmit, isLoggingIn } = loginSubmission();
   const form = useForm({
     initialValues: {
       email: "",
@@ -21,26 +19,6 @@ export default function LoginForm() {
     },
     validate: zodResolver(loginSchema),
   });
-
-  const handleSubmit = async (values: { email: string; password: string }) => {
-    const { email, password } = values;
-    try {
-      await login({ email, password }).unwrap();
-      showNotification({
-        title: "Login Successful",
-        message: "You have successfully logged in",
-        color: "green",
-        autoClose: NOTIFICATION_AUTO_CLOSE_TIMEOUT_IN_MILLISECONDS,
-      });
-    } catch (error) {
-      showNotification({
-        title: "Login Failed",
-        message: "Invalid email or password",
-        color: "red",
-        autoClose: NOTIFICATION_AUTO_CLOSE_TIMEOUT_IN_MILLISECONDS,
-      });
-    }
-  };
 
   return (
     <div className="flex items-center justify-center w-screen h-screen">
@@ -65,7 +43,7 @@ export default function LoginForm() {
           />
 
           <Group position="center" mt="xl">
-            <Button type="submit" color="green" disabled={isLoading}>
+            <Button type="submit" color="green" disabled={isLoggingIn}>
               Submit
             </Button>
           </Group>

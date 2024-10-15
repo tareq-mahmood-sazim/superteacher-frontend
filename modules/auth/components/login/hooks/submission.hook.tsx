@@ -3,11 +3,14 @@ import { useRouter } from "next/router";
 import { showNotification } from "@mantine/notifications";
 import { z } from "zod";
 
+import { setUser } from "@/shared/redux/reducers/user.reducer";
 import { useLoginMutation } from "@/shared/redux/rtk-apis/auth/auth.api";
+import { setInLocalStorage } from "@/shared/utils/localStorage";
+import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import { loginSchema } from "../helpers/login.validation";
 
-const useStudentRegistration = () => {
+const useLoginSubmission = () => {
   const [login, { isLoading: isLoggingIn }] = useLoginMutation();
   const router = useRouter();
 
@@ -15,25 +18,16 @@ const useStudentRegistration = () => {
     try {
       const response = await login(values).unwrap();
       if (response?.accessToken) {
-        showNotification({
-          title: "Success",
-          message: "Logged in Successfully",
-          color: "green",
-        });
+        showNotification(NotificationMessage("Success", "Logged in successfully"));
+        setInLocalStorage("accessToken", response.accessToken);
+        setUser(response.user);
+        console.log(response);
         router.push("/dashboard/home");
       } else {
-        showNotification({
-          title: "Error",
-          message: "Failed to login, wrong password or email?",
-          color: "yellow",
-        });
+        showNotification(NotificationMessage("Warning", "Wrong Email or Password"));
       }
     } catch (error) {
-      showNotification({
-        title: "Error",
-        message: "Failed to login",
-        color: "red",
-      });
+      showNotification(NotificationMessage("Error", "Server Error"));
       console.error(error);
     }
   };
@@ -44,4 +38,4 @@ const useStudentRegistration = () => {
   };
 };
 
-export default useStudentRegistration;
+export default useLoginSubmission;
