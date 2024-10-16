@@ -8,7 +8,6 @@ import { setUser } from "@/shared/redux/reducers/user.reducer";
 import { useLazyMeQuery } from "@/shared/redux/rtk-apis/users/users.api";
 import { TRootState } from "@/shared/redux/store";
 import { parseApiErrorMessage } from "@/shared/utils/errors";
-import { showNotification } from "@mantine/notifications";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import { AppInitializerContext } from "./AppInitializerContext";
