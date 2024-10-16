@@ -49,3 +49,12 @@ export type TCustomAppProps<P = unknown> = AppProps & {
   Component: NextApplicationPage;
   pageProps: P;
 };
+
+export type ApiError = {
+  status: number;
+  data: {
+    message: string;
+    error: string;
+    statusCode: number;
+  };
+};
