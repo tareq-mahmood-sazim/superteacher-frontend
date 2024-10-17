@@ -22,7 +22,7 @@ const authApi = projectApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
       query: (credentials) => ({
-        url: `${AUTH_ENDPOINT}/login`,
+        url: `${AUTH_ENDPOINT}/auth/login`,
         method: "POST",
         body: credentials,
       }),
