@@ -6,7 +6,7 @@ import { showNotification } from "@mantine/notifications";
 import { z } from "zod";
 
 import { useCreateTeacherMutation } from "@/shared/redux/rtk-apis/teachers/teachers.api";
-import type { ApiError } from "@/shared/typedefs";
+import type { TApiError } from "@/shared/typedefs";
 
 import { teacherFormSchema } from "../helpers/register.validation";
 
@@ -35,7 +35,7 @@ const useTeacherRegistration = () => {
       });
       router.push("/auth/login");
     } catch (error: unknown) {
-      const apiError = error as ApiError;
+      const apiError = error as TApiError;
       if (apiError?.data?.message === "Wrong Unique Code") {
         setAttemptsLeft((prevAttempts) => {
           const newAttempts = prevAttempts - 1;
