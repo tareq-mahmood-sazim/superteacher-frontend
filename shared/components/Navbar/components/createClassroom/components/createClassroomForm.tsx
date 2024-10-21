@@ -3,23 +3,20 @@ import { useEffect, useState } from "react";
 import { TextInput, Button, MultiSelect, Container, Title, Select, Loader } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
-import { showNotification } from "@mantine/notifications";
 import { useSelector } from "react-redux";
-import { z } from "zod";
 
-import { useCreateClassroomMutation } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
 import { useLazyProfileQuery } from "@/shared/redux/rtk-apis/profiles/profiles.api";
 import { IUserData } from "@/shared/redux/rtk-apis/profiles/profiles.types";
 import { TRootState } from "@/shared/redux/store";
-import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import CreateClassSchema from "./helpers/createClass.validation";
+import CreateClassSubmission from "./hooks/createClass.submission";
 
 export default function CreateClassForm() {
   const [getProfile, { isLoading: loadingProfile }] = useLazyProfileQuery();
+  const { handleSubmit, isCreatingClassroom } = CreateClassSubmission();
   const userID = useSelector((state: TRootState) => state.authenticatedUser?.userId);
   const [profile, setProfile] = useState<IUserData | null>(null);
-  const [createClassroom, { isLoading: isCreatingClassroom }] = useCreateClassroomMutation();
   useEffect(() => {
     if (userID) {
       getProfile(userID.toString())
@@ -44,18 +41,6 @@ export default function CreateClassForm() {
     validate: zodResolver(CreateClassSchema),
   });
 
-  const handleSubmit = async (values: z.infer<typeof CreateClassSchema>) => {
-    try {
-      await createClassroom(values)
-        .unwrap()
-        .then(() => {
-          showNotification(NotificationMessage("Success", "Classroom created successfully"));
-          form.reset();
-        });
-    } catch (err: unknown) {
-      showNotification(NotificationMessage("Error", "Error creating classroom"));
-    }
-  };
   if (loadingProfile) {
     return <Loader color="green" />;
   }
