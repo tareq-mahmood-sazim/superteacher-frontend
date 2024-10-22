@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { showNotification } from "@mantine/notifications";
 import { z } from "zod";
 
+import { TApiErrorResponse } from "@/shared//typedefs/types";
 import { useCreateClassroomMutation } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
-import { IErrorProps } from "@/shared/typedefs/interfaces";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import CreateClassSchema from "../helpers/createClass.validation";
@@ -22,7 +22,7 @@ const CreateClassSubmission = () => {
       await new Promise((resolve) => setTimeout(resolve, 2000));
       router.reload();
     } catch (error: unknown) {
-      const errorData = error as IErrorProps;
+      const errorData = error as TApiErrorResponse;
       showNotification(
         NotificationMessage("Error", errorData?.data?.message[0] ?? "Error submitting Form"),
       );
