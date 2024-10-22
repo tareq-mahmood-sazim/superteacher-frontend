@@ -8,7 +8,7 @@ import { EUserRole, TTokenizedUser } from "../rtk-apis/auth/auth.types";
 interface IAuthenticatedUser {
   userId: number | null;
   email: string | null;
-  claim: EUserRole | null;
+  claim: EUserRole;
   claimId: number | null;
 }
 
@@ -16,7 +16,7 @@ const initialState: IAuthenticatedUser = {
   userId: 1,
   email: null,
   claimId: null,
-  claim: null,
+  claim: EUserRole.NONE,
 };
 
 export const authenticatedUserSlice = createSlice({
@@ -33,7 +33,7 @@ export const authenticatedUserSlice = createSlice({
     clearUser: (state) => {
       state.email = null;
       state.claimId = null;
-      state.claim = null;
+      state.claim = EUserRole.NONE;
       state.userId = null;
     },
   },

@@ -6,6 +6,7 @@ export type TLoginRequestFields = {
 export enum EUserRole {
   STUDENT = "STUDENT",
   TEACHER = "TEACHER",
+  NONE = "NONE",
 }
 
 export type TTokenizedUser = {

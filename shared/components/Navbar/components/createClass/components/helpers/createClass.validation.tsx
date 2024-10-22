@@ -4,6 +4,6 @@ const createClassSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
   subject: z.string().min(1, { message: "Subject is required" }),
   classTime: z.string().min(1, { message: "Class time is required" }),
-  daysOfTheWeek: z.array(z.string()).nonempty({ message: "Select at least one day" }),
+  daysOfTheWeek: z.array(z.string()).optional(),
 });
 export default createClassSchema;
