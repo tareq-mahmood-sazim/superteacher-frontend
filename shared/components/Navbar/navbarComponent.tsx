@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 
-import CreateClassModal from "./components/createClass/createClassModal";
+import CreateClassModal from "./components/createClassroom/createClassroomModal";
 import ProfileDropdownMenu from "./components/profileDropdown/profileDropdownButton";
 const NavbarComponent = () => (
   <div className="flex flex-row justify-between items-center h-16 shadow-md bg-[#0C0C0C]">

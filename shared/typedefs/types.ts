@@ -50,7 +50,7 @@ export type TCustomAppProps<P = unknown> = AppProps & {
   pageProps: P;
 };
 
-export type ApiError = {
+export type TApiError = {
   status: number;
   data: {
     message: string;

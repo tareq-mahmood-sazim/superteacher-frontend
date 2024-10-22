@@ -14,7 +14,7 @@ export function NotificationMessage(type: string, message: string) {
     }
   };
   return {
-    title: message,
+    title: type,
     message,
     autoClose: NOTIFICATION_AUTO_CLOSE_TIMEOUT_IN_MILLISECONDS,
     color: messageType(type),

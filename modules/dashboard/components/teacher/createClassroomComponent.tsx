@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "@mantine/core";
 
-import CreateClassModal from "@/shared/components/Navbar/components/createClass/createClassModal";
+import CreateClassModal from "@/shared/components/Navbar/components/createClassroom";
 
 export default function CreateClassroomComponent() {
   return (
