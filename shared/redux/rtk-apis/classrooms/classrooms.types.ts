@@ -9,3 +9,12 @@ export interface IClassroomResponse {
   message: string;
   status: number;
 }
+export interface IClassroom {
+  id: number;
+  title: string;
+  subject: string;
+  classTime: string;
+  daysOfTheWeek: string[];
+  teacher?: number;
+  students?: string[];
+}

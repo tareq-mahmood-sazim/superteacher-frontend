@@ -1,7 +1,7 @@
 import { getFromLocalStorage } from "@/shared/utils/localStorage";
 
 import projectApi from "../api.config";
-import { IClassroomRequest, IClassroomResponse } from "./classrooms.types";
+import { IClassroom, IClassroomRequest, IClassroomResponse } from "./classrooms.types";
 
 const CLASSROOMS_ENDPOINT = "/classrooms";
 
@@ -24,15 +24,28 @@ const classroomsApi = projectApi.injectEndpoints({
         body: classroom,
       }),
     }),
-    getOneClassroom: builder.mutation<IClassroomResponse, string>({
+    getOneClassroom: builder.query<IClassroomResponse, string>({
       query: (id: string) => ({
         url: `${CLASSROOMS_ENDPOINT}/${id}`,
-        method: "POST",
+        method: "GET",
+      }),
+    }),
+    getClassroomsByTeacher: builder.query<IClassroom[], void>({
+      query: () => ({
+        url: `${CLASSROOMS_ENDPOINT}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
       }),
     }),
   }),
 });
 
-export const { useCreateClassroomMutation, useGetOneClassroomMutation } = classroomsApi;
+export const {
+  useCreateClassroomMutation,
+  useGetOneClassroomQuery,
+  useGetClassroomsByTeacherQuery,
+} = classroomsApi;
 
 export default classroomsApi;
