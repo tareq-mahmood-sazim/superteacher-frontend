@@ -1,37 +1,56 @@
 import React, { useState, useEffect } from "react";
 
 import { Loader, MultiSelect, Text } from "@mantine/core";
-import axios from "axios";
+
+import { useLazySearchStudentsByNameQuery } from "@/shared/redux/rtk-apis/students/students.api";
 
 interface Option {
   id: string;
   label: string;
 }
+interface IStudentProfile {
+  id: number;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  createdAt: string;
+  updatedAt: string;
+  role: {
+    id: number;
+  };
+}
 
 export default function AddStudentOnClassroomForm() {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [options, setOptions] = useState<Option[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [triggerSearch, { data, isLoading, isError }] = useLazySearchStudentsByNameQuery();
 
   useEffect(() => {
-    if (query.length >= 3) {
-      setIsLoading(true);
-      axios
-        .get(`/api/search?query=${query}`)
-        .then((response) => {
-          setOptions(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setOptions([]);
-    }
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 800);
+
+    return () => clearTimeout(handler);
   }, [query]);
+
+  useEffect(() => {
+    if (debouncedQuery.length >= 3) {
+      triggerSearch(debouncedQuery);
+    }
+  }, [debouncedQuery, triggerSearch]);
+
+  useEffect(() => {
+    if (data?.data) {
+      setOptions(
+        data.data.map((student: IStudentProfile) => ({
+          id: student.id.toString(),
+          label: `${student.firstName} ${student.lastName}`,
+        })),
+      );
+    }
+  }, [data]);
 
   const selectedLabels = selectedOptions.map((id) => {
     const option = options.find((opt) => opt.id === id);
@@ -57,7 +76,7 @@ export default function AddStudentOnClassroomForm() {
 
       {selectedOptions.length > 0 && (
         <div className="mt-4">
-          <Text className="text-sm font-medium text-gray-700">Selected Options:</Text>
+          <Text className="text-sm font-medium text-gray-700 h-[180px]">Selected Options:</Text>
           <div className="flex flex-wrap mt-2">
             {selectedLabels.map((label, idx) => (
               <span
@@ -69,6 +88,12 @@ export default function AddStudentOnClassroomForm() {
             ))}
           </div>
         </div>
+      )}
+
+      {isError && (
+        <Text color="red" size="sm">
+          Error fetching data.
+        </Text>
       )}
     </div>
   );
