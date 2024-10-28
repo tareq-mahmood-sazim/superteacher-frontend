@@ -11,7 +11,7 @@ const NavbarComponent = () => (
       <Button variant="none" className="text-white border-white mx-[-12px]">
         Dashboard
       </Button>
-      <CreateClassModal buttonName="+" />
+      <CreateClassModal buttonLabel="+" />
       <ProfileDropdownMenu />
     </div>
   </div>
