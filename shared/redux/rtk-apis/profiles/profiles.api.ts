@@ -1,9 +1,8 @@
-// todo -> add strict typing for api response using userProfile response
-// todo -> check and remove <any>
-import { IUserData, TApiResponse } from "@/shared/typedefs";
+import { TApiResponse } from "@/shared/typedefs";
 import { getFromLocalStorage } from "@/shared/utils/localStorage";
 
 import projectApi from "../api.config";
+import { IUserData } from "./profiles.types";
 
 const getAuthToken = () => {
   if (typeof window !== "undefined") {
