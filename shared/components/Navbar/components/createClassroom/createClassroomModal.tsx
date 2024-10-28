@@ -1,7 +1,7 @@
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-import CreateClassForm from "./components/createClassroomForm";
+import CreateClassForm from "./components/createClassForm";
 
 interface ICreateClassModalProps {
   buttonLabel?: string;
