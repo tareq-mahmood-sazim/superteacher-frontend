@@ -18,7 +18,7 @@ export default function CreateClassModal({ buttonLabel }: ICreateClassModalProps
 
       <Button
         variant="none"
-        className="text-center text-white border-white border-1 bg-black"
+        classLabel="text-center text-white border-white border-1 bg-black"
         onClick={open}
       >
         {buttonLabel ? buttonLabel : "Create Class"}
