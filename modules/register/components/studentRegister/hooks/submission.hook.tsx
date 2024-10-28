@@ -4,6 +4,8 @@ import { showNotification } from "@mantine/notifications";
 import { z } from "zod";
 
 import { useCreateStudentMutation } from "@/shared/redux/rtk-apis/students/students.api";
+import { NotificationMessage } from "@/shared/utils/notificationMessage";
+
 
 import { studentFormSchema } from "../helpers/register.validation";
 
@@ -15,25 +17,13 @@ const useStudentRegistration = () => {
     try {
       const response = await createStudent(values).unwrap();
       if (response?.statusCode === 201) {
-        showNotification({
-          title: "Success",
-          message: response?.data?.message,
-          color: "green",
-        });
+        showNotification(NotificationMessage("Success", response?.data?.message));
         router.push("/auth/login");
       } else {
-        showNotification({
-          title: "Error",
-          message: response?.data?.message,
-          color: "yellow",
-        });
+        showNotification(NotificationMessage("Warning", response?.data?.message));
       }
     } catch (error) {
-      showNotification({
-        title: "Error",
-        message: "Failed to register the student.",
-        color: "red",
-      });
+      showNotification(NotificationMessage("Error", "An error occurred while registering student"));
       console.error("Error registering student:", error);
     }
   };
