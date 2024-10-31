@@ -1,7 +1,7 @@
 import { getFromLocalStorage } from "@/shared/utils/localStorage";
 
 import projectApi from "../api.config";
-import { IClassroom, IClassroomRequest, IClassroomResponse } from "./classrooms.types";
+import { IClassroomRequest, IClassroomResponse } from "./classrooms.types";
 
 const CLASSROOMS_ENDPOINT = "/classrooms";
 
@@ -29,8 +29,9 @@ const classroomsApi = projectApi.injectEndpoints({
         url: `${CLASSROOMS_ENDPOINT}/${id}`,
         method: "GET",
       }),
+      providesTags: () => ["classroom"],
     }),
-    getClassroomsByTeacher: builder.query<IClassroom[], void>({
+    getClassroomsByTeacher: builder.query<IClassroomResponse[], void>({
       query: () => ({
         url: `${CLASSROOMS_ENDPOINT}`,
         method: "GET",
@@ -41,7 +42,7 @@ const classroomsApi = projectApi.injectEndpoints({
     }),
     addStudentInClassroom: builder.mutation<
       IClassroomResponse,
-      { classroomid: string; studentId: string }
+      { classroomId: number; studentIds: number[] }
     >({
       query: (body) => ({
         url: `${CLASSROOMS_ENDPOINT}/addParticipant`,
@@ -51,8 +52,9 @@ const classroomsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
+      invalidatesTags: ["classroom"],
     }),
-    getParticipants: builder.query<IClassroom, string>({
+    getParticipants: builder.query<IClassroomResponse, string>({
       query: (id: string) => ({
         url: `${CLASSROOMS_ENDPOINT}/participants/${id}`,
         method: "GET",
@@ -60,6 +62,21 @@ const classroomsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
+      providesTags: () => ["classroom"],
+    }),
+    removeParticipantFromClassroom: builder.mutation<
+      IClassroomResponse,
+      { classroomId: number; studentId: number }
+    >({
+      query: (body) => ({
+        url: `${CLASSROOMS_ENDPOINT}/participants/remove`,
+        method: "POST",
+        body: body,
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+      invalidatesTags: ["classroom"],
     }),
   }),
 });
@@ -67,7 +84,10 @@ const classroomsApi = projectApi.injectEndpoints({
 export const {
   useCreateClassroomMutation,
   useGetOneClassroomQuery,
+  useLazyGetOneClassroomQuery,
   useGetClassroomsByTeacherQuery,
+  useAddStudentInClassroomMutation,
+  useRemoveParticipantFromClassroomMutation,
 } = classroomsApi;
 
 export default classroomsApi;

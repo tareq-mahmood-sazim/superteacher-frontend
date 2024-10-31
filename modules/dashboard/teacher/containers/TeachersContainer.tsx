@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Loader, SimpleGrid, Text } from "@mantine/core";
 
 import { useGetClassroomsByTeacherQuery } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
@@ -7,7 +9,6 @@ import CreateClassroomComponent from "../components/CreateClassroom/createClassr
 
 export default function TeacherContainer() {
   const { data: classRoomData, isLoading } = useGetClassroomsByTeacherQuery();
-  console.log(classRoomData);
   if (isLoading) {
     return (
       <div className="flex flex-col m-auto p-auto justify-center items-center h-screen">
@@ -27,14 +28,16 @@ export default function TeacherContainer() {
               { maxWidth: 600, cols: 1, spacing: "sm" },
             ]}
           >
-            {classRoomData.map((classroom) => (
-              <ClassroomCard
-                key={classroom.id}
-                title={classroom?.title ?? ""}
-                subject={classroom?.subject ?? ""}
-                classTime={classroom?.classTime ?? ""}
-                daysOfTheWeek={classroom?.daysOfTheWeek ?? ""}
-              />
+            {classRoomData.map((classroom, index: number) => (
+              <Link href={`/classroom?id=${classroom.id ?? ""}`} key={index}>
+                <ClassroomCard
+                  key={classroom.id}
+                  title={classroom?.title ?? ""}
+                  subject={classroom?.subject ?? ""}
+                  classTime={classroom?.classTime ?? ""}
+                  daysOfTheWeek={classroom?.daysOfTheWeek ?? ""}
+                />
+              </Link>
             ))}
           </SimpleGrid>
         </div>
