@@ -1,12 +1,13 @@
 import React from "react";
 
+import StudentContainer from "@/modules/dashboard/student/containers/studentContainer";
 import AuthGuard from "@/shared/components/wrappers/AuthGuard";
 import DashboardLayout from "@/shared/layout/dashboard.layout";
 import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
 
 const StudentDashboard = () => (
   <DashboardLayout>
-    <h1>Welcome to the Student Dashboard</h1>
+    <StudentContainer />
   </DashboardLayout>
 );
 
