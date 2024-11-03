@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { useSelector } from "react-redux";
 
-import ClassroomCard from "@/modules/dashboard/teacher/components/ClassroomCard";
+import ClassroomCard from "@/modules/classroom/components/classroomCard";
 import LoadingComponent from "@/shared/components/LoadingComponent";
 import { IClassroomResponse } from "@/shared/redux/rtk-apis/classrooms/classrooms.types";
 import { useGetStudentQuery } from "@/shared/redux/rtk-apis/students/students.api";

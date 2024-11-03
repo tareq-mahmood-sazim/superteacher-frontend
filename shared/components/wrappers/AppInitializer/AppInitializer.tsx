@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import { useAppDispatch } from "@/shared/redux/hooks";
 import { setUser } from "@/shared/redux/reducers/user.reducer";
+import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
 import { useLazyMeQuery } from "@/shared/redux/rtk-apis/users/users.api";
 import { TRootState } from "@/shared/redux/store";
 import { parseApiErrorMessage } from "@/shared/utils/errors";
@@ -32,6 +33,7 @@ const AppInitializer = ({ children }: PropsWithChildren) => {
         })
         .catch((err) => {
           const errorMessage = parseApiErrorMessage(err);
+          setUser({ id: 0, email: "", claim: EUserRole.NONE, claimId: 0 });
           console.error(errorMessage);
         });
     }

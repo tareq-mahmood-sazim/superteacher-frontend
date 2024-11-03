@@ -1,6 +1,6 @@
 import { Card, Image, Text, Badge, Group } from "@mantine/core";
 
-import ClassroomCardMenu from "../ClassroomCardMenu";
+import ClassroomCardMenu from "../classroomCardMenu";
 
 export default function ClassroomCard({
   title,
