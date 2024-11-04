@@ -1,13 +1,8 @@
 import { Tabs } from "@mantine/core";
-import PeopleContainer from "@/modules/classroom/containers/peopleContainer";
+
+import { TAB_ITEMS } from "@/modules/classroom/containers/classroomContainer/ClassroomContainer.Contants";
 
 export default function ClassroomContainer() {
-  const TAB_ITEMS = {
-    STREAM: "stream",
-    CLASSWORK: "classwork",
-    PEOPLE: "people",
-  };
-
   return (
     <div className="mx-8">
       <Tabs defaultValue={TAB_ITEMS.STREAM}>
@@ -25,9 +20,7 @@ export default function ClassroomContainer() {
 
         <Tabs.Panel value={TAB_ITEMS.STREAM}>stream tab content</Tabs.Panel>
         <Tabs.Panel value={TAB_ITEMS.CLASSWORK}>classwork tab content</Tabs.Panel>
-        <Tabs.Panel value={TAB_ITEMS.PEOPLE}>
-          <PeopleContainer />
-        </Tabs.Panel>
+        <Tabs.Panel value={TAB_ITEMS.PEOPLE}>people tab content</Tabs.Panel>
       </Tabs>
     </div>
   );
