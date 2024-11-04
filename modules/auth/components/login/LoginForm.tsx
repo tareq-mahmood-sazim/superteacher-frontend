@@ -21,26 +21,6 @@ export default function LoginForm() {
     validate: zodResolver(loginSchema),
   });
 
-  const handleSubmit = async (values: { email: string; password: string }) => {
-    const { email, password } = values;
-    try {
-      await login({ email, password }).unwrap();
-      showNotification({
-        title: "Login Successful",
-        message: "You have successfully logged in",
-        color: "green",
-        autoClose: NOTIFICATION_AUTO_CLOSE_TIMEOUT_IN_MILLISECONDS,
-      });
-    } catch (error) {
-      showNotification({
-        title: "Login Failed",
-        message: "Invalid email or password",
-        color: "red",
-        autoClose: NOTIFICATION_AUTO_CLOSE_TIMEOUT_IN_MILLISECONDS,
-      });
-    }
-  };
-
   return (
     <div className="flex items-center justify-center w-screen h-screen">
       <div className="w-full max-w-md p-6 rounded-lg">
