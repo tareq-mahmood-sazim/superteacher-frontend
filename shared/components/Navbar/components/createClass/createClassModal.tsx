@@ -3,7 +3,11 @@ import { useDisclosure } from "@mantine/hooks";
 
 import CreateClassForm from "./components/createClassForm";
 
-export default function CreateClassModal() {
+interface ICreateClassModalProps {
+  buttonLabel?: string;
+}
+
+export default function CreateClassModal({ buttonLabel }: ICreateClassModalProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -12,8 +16,12 @@ export default function CreateClassModal() {
         <CreateClassForm />
       </Modal>
 
-      <Button variant="none" className="text-white border-white text-lg w-12" onClick={open}>
-        + Create a classroom
+      <Button
+        variant="none"
+        classLabel="text-center text-white border-white border-1 bg-black"
+        onClick={open}
+      >
+        {buttonLabel ? buttonLabel : "Create Class"}
       </Button>
     </>
   );
