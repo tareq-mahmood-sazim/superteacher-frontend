@@ -1,6 +1,5 @@
 import { Divider } from "@mantine/core";
 
-import AddStudentOnClassroom from "@/modules/classroom/components/addStudentOnClassroom";
 import PeopleDetail from "@/modules/classroom/components/peopleDetail";
 
 export default function PeopleContainer() {
@@ -11,7 +10,6 @@ export default function PeopleContainer() {
       <PeopleDetail name="john doe (me)" email="john@doe.com" />
       <div className="flex flex-row justify-between gap-2">
         <h2 className="text-2xl font-bold">Students</h2>
-        <AddStudentOnClassroom />
       </div>
       <Divider />
       <PeopleDetail name="john doe" email="john@doe.com" />
