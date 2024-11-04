@@ -8,7 +8,7 @@ interface Option {
   label: string;
 }
 
-export default function AddStudentOnClassroomForm() {
+export default function AddStudentToClassroomForm() {
   const [query, setQuery] = useState("");
   const [options, setOptions] = useState<Option[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
