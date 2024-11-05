@@ -4,6 +4,7 @@ import { getFromLocalStorage } from "@/shared/utils/localStorage";
 import projectApi from "../api.config";
 import { IUserData } from "./profiles.types";
 
+
 const getAuthToken = () => {
   if (typeof window !== "undefined") {
     return getFromLocalStorage("accessToken");

@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useCreateTeacherMutation } from "@/shared/redux/rtk-apis/teachers/teachers.api";
 import type { TApiError } from "@/shared/typedefs";
 
+
 import { teacherFormSchema } from "../helpers/register.validation";
 
 const useTeacherRegistration = () => {
@@ -35,6 +36,7 @@ const useTeacherRegistration = () => {
       });
       router.push("/auth/login");
     } catch (error: unknown) {
+      
       const apiError = error as TApiError;
       if (apiError?.data?.message === "Wrong Unique Code") {
         setAttemptsLeft((prevAttempts) => {
