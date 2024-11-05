@@ -1,17 +1,32 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query/react";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 import authenticatedUserSliceReducer from "./reducers/user.reducer";
 import projectApi from "./rtk-apis/api.config";
 
-export const store = configureStore({
-  reducer: {
-    authenticatedUser: authenticatedUserSliceReducer,
-    [projectApi.reducerPath]: projectApi.reducer,
-  },
-
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(projectApi.middleware),
+const rootReducer = combineReducers({
+  authenticatedUser: authenticatedUserSliceReducer,
+  [projectApi.reducerPath]: projectApi.reducer,
 });
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["authenticatedUser"],
+  timeout: 1000,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(projectApi.middleware),
+});
+
+export const persistor = persistStore(store);
 
 setupListeners(store.dispatch);
 

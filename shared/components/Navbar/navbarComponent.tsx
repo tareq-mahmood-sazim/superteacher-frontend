@@ -1,7 +1,8 @@
 import { Button } from "@mantine/core";
 
-import CreateClassModal from "./components/createClass/createClassModal";
+import CreateClassModal from "./components/createClassroom/createClassroomModal";
 import ProfileDropdownMenu from "./components/profileDropdown/profileDropdownButton";
+
 const NavbarComponent = () => (
   <div className="flex flex-row justify-between items-center h-16 shadow-md bg-[#0C0C0C]">
     <div className="flex flex-row items-center mx-4">
@@ -11,7 +12,7 @@ const NavbarComponent = () => (
       <Button variant="none" className="text-white border-white mx-[-12px]">
         Dashboard
       </Button>
-      <CreateClassModal />
+      <CreateClassModal buttonLabel="+" />
       <ProfileDropdownMenu />
     </div>
   </div>

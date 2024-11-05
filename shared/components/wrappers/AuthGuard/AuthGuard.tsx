@@ -2,9 +2,12 @@ import { useEffect } from "react";
 
 import { useRouter } from "next/router";
 
-import LoadingComponent from "../../LoadingComponent";
+import { useSelector } from "react-redux";
+
+import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
+import { TRootState } from "@/shared/redux/store";
+
 import Unauthorized from "../../Unauthorized";
-import { useSessionContext } from "../AppInitializer/AppInitializerContext";
 import { TAuthGuardProps } from "./AuthGuard.types";
 import {
   getDefaultAllowedRolesInLoggedInRoute,
@@ -18,23 +21,20 @@ const AuthGuard = ({ children, allowedRoles }: TAuthGuardProps) => {
   }
 
   const router = useRouter();
-  const { isLoading, error, user } = useSessionContext();
-  const isUnauthenticated = !isLoading && (error || !user);
-  const isUnauthorized = !isLoading && !error && user && !allowedRoles.includes(user.claim);
+  const user = useSelector((state: TRootState) => state.authenticatedUser);
+  const isUnauthenticated = !user.userId;
+  const isUnauthorized = user.userId && !allowedRoles.includes(user.claim);
 
   useEffect(() => {
-    if (isLoading || typeof location === "undefined") return;
+    if (typeof location === "undefined") return;
 
-    if (!isLoading && isUnauthenticated) {
+    if (isUnauthenticated) {
       const redirectTo = `${location.pathname}${location.search}`;
       router.push(getLoginUrlWithRedirectParam(redirectTo));
+    } else if (isUnauthorized) {
+      router.push(getRoleBasedDefaultRouteAfterLogin(user.claim ?? EUserRole.NONE));
     }
-    if (!isLoading && isUnauthorized) {
-      router.push(getRoleBasedDefaultRouteAfterLogin(user.claim));
-    }
-  }, [router, isLoading, error, isUnauthenticated, isUnauthorized, user?.claim]);
-
-  if (isLoading) return <LoadingComponent visible={true} />;
+  }, [router, isUnauthenticated, isUnauthorized, user.claim]);
 
   if (isUnauthenticated || isUnauthorized) return <Unauthorized />;
 
