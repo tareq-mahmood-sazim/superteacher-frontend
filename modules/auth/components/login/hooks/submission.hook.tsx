@@ -11,7 +11,6 @@ import { NotificationMessage } from "@/shared/utils/notificationMessage";
 import { loginSchema } from "../helpers/login.validation";
 
 const useLoginSubmission = () => {
-
   const [login, { isLoading: isLoggingIn }] = useLoginMutation();
   const router = useRouter();
 

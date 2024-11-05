@@ -1,11 +1,12 @@
 import { PropsWithChildren, useEffect } from "react";
 
+import { showNotification } from "@mantine/notifications";
+
 import { useAppDispatch } from "@/shared/redux/hooks";
 import { setUser } from "@/shared/redux/reducers/user.reducer";
 import { useLazyMeQuery } from "@/shared/redux/rtk-apis/users/users.api";
 import { parseApiErrorMessage } from "@/shared/utils/errors";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
-
 
 import { AppInitializerContext } from "./AppInitializerContext";
 

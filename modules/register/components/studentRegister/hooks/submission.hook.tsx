@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useCreateStudentMutation } from "@/shared/redux/rtk-apis/students/students.api";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
-
 import { studentFormSchema } from "../helpers/register.validation";
 
 const useStudentRegistration = () => {
