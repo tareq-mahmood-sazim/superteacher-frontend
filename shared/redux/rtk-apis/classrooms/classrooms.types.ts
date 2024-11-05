@@ -15,4 +15,5 @@ export interface IClassroomResponse {
   teacher?: number;
   participants?: TUserProfile[];
   message?: string;
+  meetLink?: string;
 }
