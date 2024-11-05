@@ -2,7 +2,6 @@
 import { TextInput, Button, MultiSelect, Container, Title } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
 
 import CreateClassSchema from "./helpers/createClass.validation";
 
@@ -16,14 +15,13 @@ export default function CreateClassForm() {
     },
     validate: zodResolver(CreateClassSchema),
   });
-  const handleSubmit = (values: z.infer<typeof CreateClassSchema>) => values;
 
   return (
     <Container size="sm" px="xs" my="lg">
       <Title order={2} align="left" style={{ color: "#5CAA70", marginBottom: "20px" }}>
         CREATE A CLASSROOM
       </Title>
-      <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+      <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           label="Title"
           placeholder="Enter class title"
