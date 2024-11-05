@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { TextInput, Button, MultiSelect, Container, Title, Select, Loader } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
@@ -38,9 +39,7 @@ export default function CreateClassForm() {
     validate: zodResolver(CreateClassSchema),
   });
 
-  const handleSubmit = (values: z.infer<typeof CreateClassSchema>) => {
-    return values;
-  };
+  const handleSubmit = (values: z.infer<typeof CreateClassSchema>) => values;
 
   if (loadingProfile) return <Loader color="green" />;
 

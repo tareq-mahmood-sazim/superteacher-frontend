@@ -10,7 +10,6 @@ import { TRootState } from "@/shared/redux/store";
 import { parseApiErrorMessage } from "@/shared/utils/errors";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
-
 import { AppInitializerContext } from "./AppInitializerContext";
 const AppInitializer = ({ children }: PropsWithChildren) => {
   const dispatch = useAppDispatch();
