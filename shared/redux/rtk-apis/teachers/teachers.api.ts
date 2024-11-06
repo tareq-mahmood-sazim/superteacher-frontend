@@ -8,7 +8,7 @@ const teachersApi = projectApi.injectEndpoints({
       query: () => TEACHERS_ENDPOINT,
     }),
     getTeacher: builder.query({
-      query: (id) => `${TEACHERS_ENDPOINT}/${id}`,
+      query: (id) => `users/profile/${id}`,
     }),
     createTeacher: builder.mutation({
       query: (data) => ({

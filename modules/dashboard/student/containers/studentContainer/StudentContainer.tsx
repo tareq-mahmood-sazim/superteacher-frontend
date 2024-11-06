@@ -16,8 +16,8 @@ export default function StudentContainer() {
   if (data) {
     const studentData = data?.data;
 
-    if (studentData.classrooms.length > 0) {
-      const classRooms = studentData.classrooms;
+    if (studentData.userProfile.classrooms.length > 0) {
+      const classRooms = studentData.userProfile.classrooms;
 
       return (
         <>

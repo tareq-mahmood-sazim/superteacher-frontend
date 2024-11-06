@@ -60,14 +60,12 @@ export default function AddStudentOnClassroomForm({ onClose }: { onClose: () => 
 
   const handleSubmit = async () => {
     const parsedSelectedOptions = selectedOptions.map((id) => parseInt(id, 10));
-    console.log(parsedSelectedOptions);
     try {
       await addStudentOnClassroom({
         classroomId: parseInt(classroomId, 10),
         studentIds: parsedSelectedOptions,
       }).unwrap();
       setSelectedOptions([]);
-      console.log(addedOnClassroom);
       showNotification(NotificationMessage("success", addedOnClassroom?.message ?? ""));
     } catch (error) {
       console.error("Error adding students:", error);

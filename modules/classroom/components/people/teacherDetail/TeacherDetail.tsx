@@ -11,10 +11,11 @@ export default function TeacherDetail({ id }: { id: number }) {
     return (
       <div className="flex flex-row justify-between gap-2">
         <p>
-          {data.data?.firstName ?? ""} {data.data?.lastName ?? ""} <SelfUserDetail id={id} />
+          {data.data?.userProfile?.firstName ?? ""} {data.data?.userProfile?.lastName ?? ""}{" "}
+          <SelfUserDetail id={id} />
         </p>
         <div className="flex flex-row justify-between gap-2">
-          <p>{data.data?.user?.email ?? ""}</p>
+          <p>{data.data?.email ?? ""}</p>
         </div>
       </div>
     );

@@ -1,3 +1,5 @@
+import { IClassroomResponse } from "@/shared/redux/rtk-apis/classrooms/classrooms.types";
+
 export type TUserProfile = {
   id: number;
   createdAt: string;
@@ -16,4 +18,5 @@ export type TUserProfile = {
   major?: string | null;
   semesterOrYear?: string | null;
   user?: number;
+  classrooms: IClassroomResponse[];
 };
