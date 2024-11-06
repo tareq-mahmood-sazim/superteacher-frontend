@@ -1,6 +1,6 @@
 import { Tabs } from "@mantine/core";
 
-import { TAB_ITEMS } from "@/modules/classroom/containers/classroomContainer/ClassroomContainer.contants";
+import { TAB_ITEMS } from "@/modules/classroom/containers/classroomContainer/ClassroomContainer.constants";
 
 export default function ClassroomContainer() {
   return (
