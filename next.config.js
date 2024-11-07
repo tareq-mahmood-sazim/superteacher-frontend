@@ -5,10 +5,10 @@ const getConnectSrcCSPConfig = () => {
   const defaultConnectSrc = "";
 
   if (["development", "local"].includes(env)) {
-    return `${defaultConnectSrc} http://localhost:*`;
+    return `${defaultConnectSrc} http://localhost:* ws://localhost:*`;
   }
 
-  return defaultConnectSrc;
+  return `${defaultConnectSrc} *`;
 };
 
 const cspHeader = `
@@ -33,7 +33,6 @@ const nextConfig = {
     domains: ["localhost"],
   },
 
-  // eslint-disable-next-line require-await
   async headers() {
     return [
       {

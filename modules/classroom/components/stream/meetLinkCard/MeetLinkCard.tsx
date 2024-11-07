@@ -10,7 +10,7 @@ export default function MeetLinkCard({ meetLink }: { meetLink: string }) {
           <h2>Meet link</h2>
           <Link
             href={meetLink}
-            className="text-blue-500 underline hover:text-blue-700 duration-300"
+            className="text-blue-500 underline hover:text-blue-700 duration-300 mx-4"
           >
             {meetLink}
           </Link>
