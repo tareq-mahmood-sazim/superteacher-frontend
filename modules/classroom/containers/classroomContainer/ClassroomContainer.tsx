@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { Tabs } from "@mantine/core";
 
 import PeopleContainer from "@/modules/classroom/containers/peopleContainer";
-import StreamContainer from "@/modules/classroom/containers/streamContainer";
 import LoadingComponent from "@/shared/components/LoadingComponent";
 import { useLazyGetOneClassroomQuery } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
 
@@ -54,7 +53,7 @@ export default function ClassroomContainer() {
           </Tabs.List>
 
           <Tabs.Panel value={TAB_ITEMS.STREAM}>
-            <StreamContainer classRoomData={classroomData} isLoading={isLoading} />
+            <p>stream container tab</p>
           </Tabs.Panel>
           <Tabs.Panel value={TAB_ITEMS.CLASSWORK}>classwork tab content</Tabs.Panel>
           <Tabs.Panel value={TAB_ITEMS.PEOPLE}>
