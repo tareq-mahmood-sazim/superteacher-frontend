@@ -7,7 +7,7 @@ import CreateClassModal from "@/shared/components/Navbar/components/createClassr
 export default function CreateClassroomComponent() {
   return (
     <Button variant="none" className="text-center text-white border-white border-1 bg-black">
-      <CreateClassModal buttonName="+ Create a Classroom" />
+      <CreateClassModal buttonLabel="+ Create a Classroom" />
     </Button>
   );
 }
