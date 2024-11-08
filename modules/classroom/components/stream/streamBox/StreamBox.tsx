@@ -2,29 +2,32 @@ import { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 
-import { Button, Card, Textarea } from "@mantine/core";
+import { Button, Card, Loader, Textarea } from "@mantine/core";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useSelector } from "react-redux";
 
+import UserMessageDetail from "@/modules/classroom/components/stream/userMessageDetail";
 import { useWebsocket } from "@/shared/hooks/useWebsocket";
-import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
-import { useProfileQuery } from "@/shared/redux/rtk-apis/profiles/profiles.api";
+import { useGetMessagesQuery } from "@/shared/redux/rtk-apis/messages/messages.api";
+import type { IMessageType } from "@/shared/redux/rtk-apis/messages/messages.types";
 import { TRootState } from "@/shared/redux/store";
 
-type MessageData = {
-  content: string;
-  classroomId: string;
-  senderType: EUserRole;
-  userId: number;
-  sender: number;
-  createdAt: string;
-};
+dayjs.extend(relativeTime);
 
 export default function StreamBox() {
   const router = useRouter();
   const classroomId = router.query["id"] as string;
   const claim = useSelector((state: TRootState) => state.authenticatedUser.claim);
+
+  const {
+    data: classroomMessages,
+    isLoading: classroomMessagesLoading,
+    isError: classroomMessagesError,
+  } = useGetMessagesQuery(classroomId);
+
   const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<MessageData[]>([]);
+  const [messages, setMessages] = useState<IMessageType[]>([]);
 
   const socket = useWebsocket({
     path: "/",
@@ -33,16 +36,18 @@ export default function StreamBox() {
   });
 
   useEffect(() => {
+    if (classroomMessages) {
+      const sortedMessages = [...classroomMessages].sort(
+        (a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime(),
+      );
+      setMessages(sortedMessages);
+    }
+
     if (socket) {
-      socket.on("PONG", (data: Omit<MessageData, "sender">) => {
-        console.log("Message received from server:", data);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            ...data,
-            sender: 0,
-          },
-        ]);
+      socket.on("PONG", (data: Omit<IMessageType, "sender">) => {
+        if (data.classroomId === classroomId) {
+          setMessages((prevMessages) => [{ ...(data as IMessageType) }, ...prevMessages]);
+        }
       });
     }
 
@@ -51,12 +56,11 @@ export default function StreamBox() {
         socket.off("PONG");
       }
     };
-  }, [socket, claim]);
+  }, [socket, classroomId, classroomMessages]);
 
   const sendMessage = () => {
     if (socket && message.trim()) {
       socket.emit("PING", { content: message, classroomId, senderType: claim });
-      console.log("Message sent:", { content: message, classroomId });
       setMessage("");
     }
   };
@@ -89,48 +93,20 @@ export default function StreamBox() {
         </Button>
       </div>
 
-      <div className=" p-4 rounded-lg space-y-2">
-        {messages.map((msg, index) => (
-          <Card className="h-32 my-8 shadow-lg" key={index}>
-            <UserMessageDetail id={msg.userId} msg={msg} />
-            <span className="text-black"> {msg.content}</span>
-          </Card>
-        ))}
-      </div>
+      {classroomMessagesLoading ? (
+        <Loader color="green" />
+      ) : classroomMessagesError ? (
+        <div>Error loading messages. Please try again.</div>
+      ) : (
+        <div className="p-4 rounded-lg space-y-2">
+          {messages.map((msg, index) => (
+            <Card className="h-32 my-8 shadow-lg" key={index}>
+              <UserMessageDetail id={msg.sender} msg={msg} />
+              <span className="text-black"> {msg.content}</span>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
-}
-function UserMessageDetail({ id, msg }: { id: number; msg: MessageData }) {
-  const {
-    data: userData,
-    isLoading: userLoading,
-    isError: userError,
-  } = useProfileQuery(id.toString());
-  console.log(userData, "map this");
-  if (userData && msg) {
-    return (
-      <div className="flex space-x-2 my-2">
-        <div className="flex-1">
-          <strong className="text-black">
-            {msg.senderType === EUserRole.TEACHER ? (
-              <span className="text-green-600">
-                {userData.userProfile.firstName} {userData.userProfile.lastName}
-              </span>
-            ) : (
-              <span className="text-black">
-                {userData.userProfile.firstName} {userData.userProfile.lastName}
-              </span>
-            )}
-          </strong>
-        </div>
-      </div>
-    );
-  }
-  if (userLoading) {
-    return <div>Loading...</div>;
-  }
-  if (userError) {
-    return <div>Error...</div>;
-  }
-  return null;
 }

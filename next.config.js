@@ -8,7 +8,7 @@ const getConnectSrcCSPConfig = () => {
     return `${defaultConnectSrc} http://localhost:* ws://localhost:*`;
   }
 
-  return `${defaultConnectSrc} *`;
+  return `${defaultConnectSrc} http://localhost:* ws://localhost:*`;
 };
 
 const cspHeader = `
