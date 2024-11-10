@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Loader, SimpleGrid, Text } from "@mantine/core";
 
-import ClassroomCard from "@/modules/classroom/components/classroomCard";
+import ClassroomCard from "@/modules/classroom/components/classroom/classroomCard";
 import CreateClassroomComponent from "@/modules/dashboard/teacher/components/CreateClassroom";
 import { useGetClassroomsByTeacherQuery } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
 
