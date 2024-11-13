@@ -12,7 +12,7 @@ const teachersApi = projectApi.injectEndpoints({
     }),
     createTeacher: builder.mutation({
       query: (data) => ({
-        url: TEACHERS_ENDPOINT,
+        url: "users",
         method: "POST",
         body: data,
       }),

@@ -47,7 +47,7 @@ export default function RegisterStudentForm() {
         majorSubject: "",
         medium: "1",
         classLevel: "",
-        degree: "",
+        degree: "null",
         semesterOrYear: "",
         role: 2,
       },
