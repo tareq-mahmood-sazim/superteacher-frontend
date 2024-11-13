@@ -1,4 +1,4 @@
-export type TPresignedUrlInput = Pick<File, "name" | "type">;
+export type TPresignedUrlInput = { name: string; type: string };
 
 export type TPresignedUrlFileDto = TPresignedUrlInput[];
 

@@ -11,7 +11,6 @@ const FileUploadSection = ({
   fileAcceptTypes,
 }: TFileUploadSectionProps) => {
   const [uploadedFileName, setUploadedFileName] = useState<string>("");
-
   return (
     <>
       <Text color={uploadError ? "red" : "black"}>
