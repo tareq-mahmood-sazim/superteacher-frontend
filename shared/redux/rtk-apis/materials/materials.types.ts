@@ -1,5 +1,15 @@
 import type { IClassroomResponse } from "../classrooms/classrooms.types";
 
+type TSubmissionProps = {
+  attachment: string[];
+  createdAt: string;
+  id: number;
+  isLate: boolean;
+  materials: number;
+  submittedAt: string;
+  updatedAt: string;
+  userProfile: number;
+};
 enum MaterialsEnum {
   ASSIGNMENT = "ASSIGNMENT",
   STUDYMATERIALS = "STUDYMATERIALS",
@@ -7,7 +17,7 @@ enum MaterialsEnum {
 }
 export type TMaterials = {
   id: number;
-  submissions: IClassroomResponse[];
+  submissions: TSubmissionProps[];
   createdAt: string;
   updatedAt: string;
   title: string;
@@ -17,7 +27,6 @@ export type TMaterials = {
   attachments: string[];
   classroom: IClassroomResponse | number;
 };
-
 export type TMaterialRequest = {
   title: string;
   instructions: string;

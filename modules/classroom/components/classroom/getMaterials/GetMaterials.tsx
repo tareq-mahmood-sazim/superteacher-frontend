@@ -1,7 +1,7 @@
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
-import { Accordion, Text, Card, Group } from "@mantine/core";
+import { Accordion, Divider, Text, Card, Group } from "@mantine/core";
+import { useSelector } from "react-redux";
 
 import {
   useGetAssignmentByClassroomQuery,
@@ -9,17 +9,15 @@ import {
   useGetScheduleExamByClassroomQuery,
 } from "@/shared/redux/rtk-apis/materials/materials.api";
 import type { TMaterials } from "@/shared/redux/rtk-apis/materials/materials.types";
+import { TRootState } from "@/shared/redux/store";
 
 import CreateSubmissionModal from "../createSubmission";
-
-const FaChevronDown = dynamic(() => import("react-icons/fa6").then((mod) => mod.FaChevronDown), {
-  ssr: false,
-});
+import GetSubmissions from "../getSubmissions";
 
 export default function GetMaterials() {
   const router = useRouter();
   const classroomId = parseInt((router.query["id"] as string) ?? "0", 10);
-
+  const claim = useSelector((state: TRootState) => state.authenticatedUser.claim);
   const { data: assignments, isLoading: loadingAssignments } =
     useGetAssignmentByClassroomQuery(classroomId);
   const { data: studyMaterials, isLoading: loadingStudyMaterials } =
@@ -45,7 +43,11 @@ export default function GetMaterials() {
       </Text>
       <div className="flex justify-end mt-2">
         <div className="flex flex-col md:flex-row-reverse">
-          <CreateSubmissionModal materialId={material.id} />
+          {claim === "STUDENT" ? (
+            <CreateSubmissionModal materialId={material.id} />
+          ) : (
+            <GetSubmissions list={material.submissions} />
+          )}
           <Text size="sm" className="m-2">
             Due: {new Date(material.dueDate).toLocaleString()}
           </Text>
@@ -56,17 +58,34 @@ export default function GetMaterials() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4">Uploaded Resources</h1>
-      <Accordion classNames={{ item: "mb-2" }}>
+      <h1 className="text-2xl font-semibold mb-4">Exams</h1>
+      <Divider my="md" color="gray" />
+      <Accordion chevronPosition="left" classNames={{ item: "mb-2" }}>
+        <Accordion.Item value="exams">
+          <Accordion.Control
+            className="text-white hover:bg-transparent focus:outline-none"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            Scheduled Exams
+          </Accordion.Control>
+          <Accordion.Panel>
+            {scheduleExams.length === 0 ? (
+              <Text>No scheduled exams available.</Text>
+            ) : (
+              scheduleExams.map((exam) => renderMaterialItem(exam))
+            )}
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+      <h1 className="text-2xl font-semibold mb-4 my-8">Uploaded Resources</h1>
+      <Divider my="md" color="gray" />
+      <Accordion chevronPosition="left" classNames={{ item: "mb-2" }}>
         <Accordion.Item value="assignments">
           <Accordion.Control
             className="text-white hover:bg-transparent focus:outline-none"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <div className="flex flex-row gap-6">
-              <FaChevronDown size={18} className="mr-2" />
-              <p>Assignments</p>
-            </div>
+            <p>Assignments</p>
           </Accordion.Control>
           <Accordion.Panel>
             {assignments.length === 0 ? (
@@ -82,7 +101,6 @@ export default function GetMaterials() {
             className="text-white hover:bg-transparent focus:outline-none"
             style={{ display: "flex", alignItems: "center" }}
           >
-            <FaChevronDown size={18} className="mr-2" />
             Study Materials
           </Accordion.Control>
           <Accordion.Panel>
@@ -90,23 +108,6 @@ export default function GetMaterials() {
               <Text>No study materials available.</Text>
             ) : (
               studyMaterials.map((material) => renderMaterialItem(material))
-            )}
-          </Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="exams">
-          <Accordion.Control
-            className="text-white hover:bg-transparent focus:outline-none"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <FaChevronDown size={18} className="mr-2" />
-            Scheduled Exams
-          </Accordion.Control>
-          <Accordion.Panel>
-            {scheduleExams.length === 0 ? (
-              <Text>No scheduled exams available.</Text>
-            ) : (
-              scheduleExams.map((exam) => renderMaterialItem(exam))
             )}
           </Accordion.Panel>
         </Accordion.Item>

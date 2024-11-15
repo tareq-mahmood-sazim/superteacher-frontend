@@ -34,7 +34,7 @@ export default function StudentContainer() {
     } else {
       return (
         <div className="flex flex-col m-auto p-auto justify-center items-center h-screen">
-          <p>You are not enrolled in any classroom, duh?</p>
+          <p>You are not enrolled in any classroom.</p>
         </div>
       );
     }
