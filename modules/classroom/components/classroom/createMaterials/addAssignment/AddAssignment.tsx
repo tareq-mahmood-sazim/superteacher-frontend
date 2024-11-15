@@ -1,14 +1,16 @@
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Modal, TextInput, Textarea, FileInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
 import { useForm, Controller } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 
-import { useGetPresignedUrlMutation } from "@/shared/redux/rtk-apis/file-uploads/file-uploads.api";
-import { UploadToS3 } from "@/shared/utils/uploadFile";
+import { useFileProcessingHook } from "@/shared/hooks/useFileProcessingHook";
+import { useCreateAssignmentMutation } from "@/shared/redux/rtk-apis/materials/materials.api";
+import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import { AssignmentSchema } from "./helpers/assignment.validation";
 
@@ -18,60 +20,47 @@ type FormValues = {
   title: string;
   instructions: string;
   dueDate: Date | null;
-  attachments: File[];
-};
-
-type PresignedUrlResponse = {
-  signedUrl: string;
+  attachments?: File[];
+  classroomId: number;
 };
 
 export default function AddAssignment() {
+  const router = useRouter();
+  const classroomId = parseInt(router.query["id"] as string);
   const [opened, { open, close }] = useDisclosure(false);
-  const [uploadFile] = useGetPresignedUrlMutation();
+  const [createAssignment] = useCreateAssignmentMutation();
+  const { FileProcessing } = useFileProcessingHook();
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(AssignmentSchema),
     defaultValues: {
       title: "",
       instructions: "",
-      dueDate: null,
+      dueDate: new Date(),
       attachments: [],
     },
   });
 
-  const fileProcessing = async (data: FormValues): Promise<string[]> => {
-    const files = data.attachments;
-    if (files.length === 0) return [];
-
-    const fileData = files.map((file) => ({
-      name: `${uuidv4()}_${file.name}`,
-      type: file.type,
-    }));
-
-    const response: PresignedUrlResponse[] = await uploadFile(fileData).unwrap();
-    const uploadPromises = files.reduce<Promise<string>[]>((promises, file, index) => {
-      const signedUrl = response[index]?.signedUrl;
-      if (signedUrl) {
-        promises.push(UploadToS3(file, signedUrl));
-      }
-      return promises;
-    }, []);
-
-    return Promise.all(uploadPromises);
-  };
-
   const onSubmit = async (data: FormValues) => {
     try {
-      const fileKeys = await fileProcessing(data);
+      const fileKeys = data.attachments?.length ? await FileProcessing(data.attachments) : [];
+      const parseDate = new Date(data.dueDate ?? "");
+
       const assignmentForm = {
         title: data.title,
         instructions: data.instructions,
-        dueDate: data.dueDate,
-        attachments: fileKeys,
+        dueDate: parseDate,
+        attachments: fileKeys.length ? fileKeys : undefined,
+        classroomId,
       };
-      console.log(assignmentForm);
-      // Todo -> add api call here
+
+      const response = await createAssignment(assignmentForm).unwrap();
+      if (response.data) {
+        showNotification(NotificationMessage("Success", "Assignment created successfully"));
+      } else {
+        showNotification(NotificationMessage("Error", "Assignment creation failed"));
+      }
     } catch (error) {
-      // Todo -> throw error notification here
+      showNotification(NotificationMessage("Error", "Assignment creation failed"));
       console.error("File upload error:", error);
     }
   };
