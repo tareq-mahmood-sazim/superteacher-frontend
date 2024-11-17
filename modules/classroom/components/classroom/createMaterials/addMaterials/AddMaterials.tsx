@@ -49,7 +49,7 @@ export default function AddMaterials() {
         instructions: data.instructions,
         dueDate: parseDate,
         attachments: fileKeys.length ? fileKeys : undefined,
-        classroomId,
+        classroom: classroomId,
       };
 
       const response = await createMaterials(materialForm).unwrap();
@@ -68,7 +68,8 @@ export default function AddMaterials() {
   return (
     <>
       <Modal opened={opened} onClose={close} centered>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <h2 className="text-xl font-bold mb-4 text-green-500">Add Material</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
           <Controller
             name="title"
             control={control}

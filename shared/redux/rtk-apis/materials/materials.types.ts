@@ -28,11 +28,12 @@ export type TMaterials = {
   classroom: IClassroomResponse | number;
 };
 export type TMaterialRequest = {
+  id?: number;
   title: string;
   instructions: string;
   dueDate: Date | null;
   attachments?: string[];
-  classroomId: number;
+  classroom: number;
 };
 export type TMaterialResponse = {
   statusCode: number;

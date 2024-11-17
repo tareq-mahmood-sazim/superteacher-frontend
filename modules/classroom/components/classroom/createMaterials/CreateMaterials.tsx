@@ -30,7 +30,7 @@ export default function CreateMaterials() {
 
 function MaterialButtons() {
   return (
-    <div className="flex flex-col md:flex-row mt-4 gap-2">
+    <div className="flex flex-col md:flex-row mt-4 md:mt-0 gap-2">
       <ScheduleExam />
       <AddAssignment />
       <AddMaterials />

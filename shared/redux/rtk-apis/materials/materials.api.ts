@@ -17,6 +17,7 @@ const materialsApi = projectApi.injectEndpoints({
         url: `materials/assignment`,
         method: "POST",
         body,
+        invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
@@ -27,6 +28,7 @@ const materialsApi = projectApi.injectEndpoints({
         url: `materials/study-materials`,
         method: "POST",
         body,
+        invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
@@ -37,6 +39,7 @@ const materialsApi = projectApi.injectEndpoints({
         url: `materials/schedule-exam`,
         method: "POST",
         body,
+        invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
@@ -50,6 +53,7 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
+      providesTags: () => ["materials"],
     }),
     getStudyMaterialsByClassroom: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
@@ -59,11 +63,44 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
+      providesTags: () => ["materials"],
     }),
     getScheduleExamByClassroom: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/schedule-exam/${classroomId}`,
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+      providesTags: () => ["materials"],
+    }),
+    getOneMaterialById: builder.query({
+      query: (id) => ({
+        url: `materials/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+    }),
+    updateMaterialById: builder.mutation<TMaterialResponse, TMaterialRequest>({
+      query: (body) => ({
+        url: `materials/update-materials/${body.id}`,
+        method: "PATCH",
+        body,
+        invalidatesTags: ["materials"],
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+        providesTags: ["materials"],
+      }),
+    }),
+    deleteMaterials: builder.mutation<TMaterialResponse, number>({
+      query: (id) => ({
+        url: `materials/delete-materials/${id}`,
+        method: "DELETE",
+        invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
@@ -80,4 +117,7 @@ export const {
   useGetAssignmentByClassroomQuery,
   useGetStudyMaterialsByClassroomQuery,
   useGetScheduleExamByClassroomQuery,
+  useGetOneMaterialByIdQuery,
+  useUpdateMaterialByIdMutation,
+  useDeleteMaterialsMutation,
 } = materialsApi;

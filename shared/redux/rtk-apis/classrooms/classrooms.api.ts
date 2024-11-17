@@ -90,6 +90,17 @@ const classroomsApi = projectApi.injectEndpoints({
         },
       }),
     }),
+    isParticipant: builder.query({
+      query: (id: string) => ({
+        url: `${CLASSROOMS_ENDPOINT}/isParticipant/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+      transformResponse: (response: { statusCode: number; data: boolean; message: string }) =>
+        response.data,
+    }),
   }),
 });
 
@@ -101,6 +112,7 @@ export const {
   useAddStudentInClassroomMutation,
   useRemoveParticipantFromClassroomMutation,
   useAddMeetLinkMutation,
+  useLazyIsParticipantQuery,
 } = classroomsApi;
 
 export default classroomsApi;
