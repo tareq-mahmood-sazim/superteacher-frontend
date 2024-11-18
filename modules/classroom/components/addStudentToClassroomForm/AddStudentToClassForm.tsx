@@ -63,7 +63,7 @@ export default function AddStudentOnClassroomForm() {
 
       {selectedOptions.length > 0 && (
         <div className="mt-4">
-          <Text className="text-sm font-medium text-gray-700 h-[180px]">Selected Options:</Text>
+          <Text className="text-sm font-medium text-gray-700">Selected Options:</Text>
           <div className="flex flex-wrap mt-2">
             {selectedLabels.map((label, idx) => (
               <span
@@ -75,12 +75,6 @@ export default function AddStudentOnClassroomForm() {
             ))}
           </div>
         </div>
-      )}
-
-      {isError && (
-        <Text color="red" size="sm">
-          Error fetching data.
-        </Text>
       )}
     </div>
   );
