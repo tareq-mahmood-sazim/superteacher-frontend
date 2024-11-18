@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { TextInput, Button, MultiSelect, Container, Title, Select, Loader } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 import { useSelector } from "react-redux";
 import { z } from "zod";
 
 import { useLazyProfileQuery } from "@/shared/redux/rtk-apis/profiles/profiles.api";
 import { IUserData } from "@/shared/redux/rtk-apis/profiles/profiles.types";
 import { TRootState } from "@/shared/redux/store";
+import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import CreateClassSchema from "./helpers/createClass.validation";
 
@@ -24,7 +26,8 @@ export default function CreateClassForm() {
           if (data) setProfile(data);
         })
         .catch((error) => {
-          console.error("Error fetching profile:", error);
+          console.error(error);
+          showNotification(NotificationMessage("Warning", "Failed to get profile"));
         });
     }
   }, [userID, getProfile]);
