@@ -19,19 +19,33 @@ const AccordionSection = ({
   title: string;
   items: TMaterials[];
   emptyMessage: string;
-}) => (
-  <Accordion.Item value={title}>
-    <Accordion.Control
-      className="text-white hover:bg-transparent focus:outline-none"
-      style={{ display: "flex", alignItems: "center" }}
-    >
-      {title}
-    </Accordion.Control>
-    <Accordion.Panel>
-      {items.length === 0 ? <Text>{emptyMessage}</Text> : items.map((item) => MaterialItem(item))}
-    </Accordion.Panel>
-  </Accordion.Item>
-);
+}) => {
+  const isEmpty = items.length === 0;
+
+  return (
+    <Accordion.Item value={title}>
+      <Accordion.Control
+        className={`hover:bg-transparent focus:outline-none ${
+          isEmpty ? "text-white" : "text-white"
+        }`}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          color: isEmpty ? "white" : "white",
+        }}
+      >
+        {title}
+      </Accordion.Control>
+      <Accordion.Panel>
+        {isEmpty ? (
+          <Text className="text-white">{emptyMessage}</Text> // Empty message in white
+        ) : (
+          items.map((item) => MaterialItem(item))
+        )}
+      </Accordion.Panel>
+    </Accordion.Item>
+  );
+};
 
 export default function GetMaterials() {
   const router = useRouter();
@@ -79,7 +93,6 @@ export default function GetMaterials() {
           emptyMessage="No scheduled exams available."
         />
       </Accordion>
-
       <h1 className="text-2xl font-semibold mb-4 my-8">Uploaded Resources</h1>
       <Divider my="md" color="gray" />
       <Accordion chevronPosition="left" classNames={{ item: "mb-2" }}>

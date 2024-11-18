@@ -1,15 +1,9 @@
-import dynamic from "next/dynamic";
-
-import { Container, Title, Text, Group } from "@mantine/core";
+import { Container, Title, Group } from "@mantine/core";
 import { Card } from "@mantine/core";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-
-const CiUser = dynamic(() => import("react-icons/ci").then((mod) => mod.CiUser), { ssr: false });
-const FaChalkboardTeacher = dynamic(
-  () => import("react-icons/fa").then((mod) => mod.FaChalkboardTeacher),
-  { ssr: false },
-);
+import { FaGraduationCap } from "react-icons/fa";
+import { IoLibrarySharp } from "react-icons/io5";
 
 export default function RegistrationModal() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -43,12 +37,10 @@ export default function RegistrationModal() {
                 height: "200px",
               }}
             >
-              <Group position="center" style={{ marginTop: "30px" }}>
-                <CiUser size={40} color="black" />
-                <Text weight={500} size="lg" style={{ color: "black", textDecoration: "none" }}>
-                  Student
-                </Text>
-              </Group>
+              <div className="my-16 w-full text-center flex flex-row items-center gap-2 ml-2">
+                <IoLibrarySharp color="black" />
+                Student
+              </div>
             </Card>
 
             <Card
@@ -64,15 +56,10 @@ export default function RegistrationModal() {
                 height: "200px",
               }}
             >
-              <Group
-                position="center"
-                style={{ marginTop: "30px", display: "flex", flexDirection: "row" }}
-              >
-                <FaChalkboardTeacher size={40} color="black" />
-                <Text weight={500} size="lg" style={{ color: "black", textDecoration: "none" }}>
-                  Teacher
-                </Text>
-              </Group>
+              <div className="my-16 w-full text-center flex flex-row items-center gap-2 ml-2">
+                <FaGraduationCap color="black" />
+                Teacher
+              </div>
             </Card>
           </Group>
         </Container>
