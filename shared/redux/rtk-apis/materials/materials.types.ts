@@ -11,7 +11,10 @@ type TSubmissionProps = {
   userProfile: number;
 };
 export enum MaterialsEnum {
-
+  ASSIGNMENT = "ASSIGNMENT",
+  STUDYMATERIALS = "STUDYMATERIALS",
+  EXAM = "EXAM",
+}
 export type TMaterials = {
   id: number;
   submissions: TSubmissionProps[];
