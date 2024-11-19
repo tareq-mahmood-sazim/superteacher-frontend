@@ -29,7 +29,7 @@ export default function CreateSubmissionForm({
               if (files) {
                 form.setFieldValue(
                   "attachment",
-                  Array.from(files).map((file) => file)
+                  Array.from(files).map((file) => file),
                 );
               }
             }}
@@ -38,12 +38,7 @@ export default function CreateSubmissionForm({
           />
         </div>
         <Group position="right" className="mt-6">
-          <Button
-            type="reset"
-            color="green"
-            onClick={() => closeButton()}
-            className="w-32"
-          >
+          <Button type="reset" color="green" onClick={() => closeButton()} className="w-32">
             Close
           </Button>
           <Button
