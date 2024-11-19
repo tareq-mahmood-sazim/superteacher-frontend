@@ -4,7 +4,6 @@ import { Loader, MultiSelect, Text } from "@mantine/core";
 
 import { useLazySearchStudentsByNameQuery } from "@/shared/redux/rtk-apis/students/students.api";
 
-
 import type { IOption, IStudentProfile } from "./AddStudentToClassForm.types";
 
 export default function AddStudentOnClassroomForm() {
@@ -12,7 +11,7 @@ export default function AddStudentOnClassroomForm() {
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [options, setOptions] = useState<IOption[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [triggerSearch, { data, isLoading, isError }] = useLazySearchStudentsByNameQuery();
+  const [triggerSearch, { data, isLoading }] = useLazySearchStudentsByNameQuery();
 
   useEffect(() => {
     const handler = setTimeout(() => {
