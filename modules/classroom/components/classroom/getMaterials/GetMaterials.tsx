@@ -7,7 +7,7 @@ import {
   useGetStudyMaterialsByClassroomQuery,
   useGetScheduleExamByClassroomQuery,
 } from "@/shared/redux/rtk-apis/materials/materials.api";
-import type { TMaterials } from "@/shared/redux/rtk-apis/materials/materials.types";
+import type { TMaterial } from "@/shared/redux/rtk-apis/materials/materials.types";
 
 import MaterialItem from "./materialItem";
 
@@ -17,7 +17,7 @@ const AccordionSection = ({
   emptyMessage,
 }: {
   title: string;
-  items: TMaterials[];
+  items: TMaterial[];
   emptyMessage: string;
 }) => (
   <Accordion.Item value={title}>

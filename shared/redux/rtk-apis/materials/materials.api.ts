@@ -1,7 +1,7 @@
 import { getFromLocalStorage } from "@/shared/utils/localStorage";
 
 import projectApi from "../api.config";
-import { TMaterialRequest, TMaterialResponse, TMaterials } from "./materials.types";
+import { TMaterialRequest, TMaterialResponse, TMaterial } from "./materials.types";
 
 const getAuthToken = () => {
   if (typeof window !== "undefined") {
@@ -45,7 +45,7 @@ const materialsApi = projectApi.injectEndpoints({
         },
       }),
     }),
-    getAssignmentByClassroom: builder.query<TMaterials[], number>({
+    getAssignmentByClassroom: builder.query<TMaterial[], number>({
       query: (classroomId) => ({
         url: `materials/assignment/${classroomId}`,
         method: "GET",
@@ -55,7 +55,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       providesTags: () => ["materials"],
     }),
-    getStudyMaterialsByClassroom: builder.query<TMaterials[], number>({
+    getStudyMaterialsByClassroom: builder.query<TMaterial[], number>({
       query: (classroomId) => ({
         url: `materials/study-materials/${classroomId}`,
         method: "GET",
@@ -65,7 +65,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       providesTags: () => ["materials"],
     }),
-    getScheduleExamByClassroom: builder.query<TMaterials[], number>({
+    getScheduleExamByClassroom: builder.query<TMaterial[], number>({
       query: (classroomId) => ({
         url: `materials/schedule-exam/${classroomId}`,
         method: "GET",

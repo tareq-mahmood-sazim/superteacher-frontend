@@ -4,16 +4,7 @@ import { GoDownload } from "react-icons/go";
 
 import { useGetStudentQuery } from "@/shared/redux/rtk-apis/students/students.api";
 
-type TSubmissionProps = {
-  attachment: string[];
-  createdAt: string;
-  id: number;
-  isLate: boolean;
-  materials: number;
-  submittedAt: string;
-  updatedAt: string;
-  userProfile: number;
-};
+import type { TSubmissionProps } from "./GetSubmissions.types";
 
 export default function GetSubmissions({ list }: { list: TSubmissionProps[] }) {
   const [opened, { open, close }] = useDisclosure(false);
@@ -38,7 +29,6 @@ function UserFullName({ id }: { id: number }) {
   const { data, isLoading, isError } = useGetStudentQuery(id);
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
-  console.log(data);
   return (
     <div>
       {data?.data?.firstName} {data?.data?.lastName}

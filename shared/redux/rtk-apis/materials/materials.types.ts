@@ -10,12 +10,12 @@ type TSubmissionProps = {
   updatedAt: string;
   userProfile: number;
 };
-enum MaterialsEnum {
+enum EMaterialsEnum {
   ASSIGNMENT = "ASSIGNMENT",
   STUDYMATERIALS = "STUDYMATERIALS",
   EXAM = "EXAM",
 }
-export type TMaterials = {
+export type TMaterial = {
   id: number;
   submissions: TSubmissionProps[];
   createdAt: string;
@@ -23,7 +23,7 @@ export type TMaterials = {
   title: string;
   instructions: string;
   dueDate: string;
-  category: MaterialsEnum;
+  category: EMaterialsEnum;
   attachments: string[];
   classroom: IClassroomResponse | number;
 };
@@ -38,5 +38,5 @@ export type TMaterialRequest = {
 export type TMaterialResponse = {
   statusCode: number;
   message: string;
-  data: TMaterials;
+  data: TMaterial;
 };
