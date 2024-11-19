@@ -25,9 +25,7 @@ export default function AddAssignment() {
 
   const onSubmit = (data: MaterialFormValues) =>
     // todo -> implement submission logic here
-     data
-  ;
-
+    data;
   return (
     <>
       <Modal opened={opened} onClose={close} centered>

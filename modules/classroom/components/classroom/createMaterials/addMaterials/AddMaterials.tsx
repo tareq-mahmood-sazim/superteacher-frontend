@@ -10,7 +10,6 @@ import { MaterialSchema } from "./helpers/material.validation";
 
 const LuFileEdit = dynamic(() => import("react-icons/lu").then((mod) => mod.LuFileEdit));
 
-
 export default function AddMaterials() {
   const [opened, { open, close }] = useDisclosure(false);
   const { control, handleSubmit } = useForm<MaterialFormValues>({
@@ -25,9 +24,7 @@ export default function AddMaterials() {
 
   const onSubmit = (data: MaterialFormValues) =>
     // todo -> implement submission logic here
-     data
-  ;
-
+    data;
   return (
     <>
       <Modal opened={opened} onClose={close} centered>

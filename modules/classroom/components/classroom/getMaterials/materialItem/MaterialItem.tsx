@@ -2,7 +2,6 @@ import { Card, Group, Text } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 import CreateSubmissionModal from "@/modules/classroom/components/classroom/createSubmission";
-import GetSubmissions from "@/modules/classroom/components/classroom/getSubmissions";
 import type { TMaterials } from "@/shared/redux/rtk-apis/materials/materials.types";
 import { TRootState } from "@/shared/redux/store";
 
@@ -26,11 +25,7 @@ export default function MaterialItem(material: TMaterials) {
       </div>
       <div className="flex justify-end mt-2">
         <div className="flex flex-col md:flex-row-reverse">
-          {claim === "STUDENT" ? (
-            <CreateSubmissionModal materialId={material.id} />
-          ) : (
-            <GetSubmissions list={material.submissions} />
-          )}
+          {claim === "STUDENT" ? <CreateSubmissionModal materialId={material.id} /> : null}
           {material.attachments.length > 0 && (
             <DownloadAttachments link={material.attachments[0] ?? "#"} />
           )}
