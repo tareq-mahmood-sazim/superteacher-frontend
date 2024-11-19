@@ -10,6 +10,7 @@ type TSubmissionProps = {
   updatedAt: string;
   userProfile: number;
 };
+
 enum EMaterialsEnum {
   ASSIGNMENT = "ASSIGNMENT",
   STUDYMATERIALS = "STUDYMATERIALS",

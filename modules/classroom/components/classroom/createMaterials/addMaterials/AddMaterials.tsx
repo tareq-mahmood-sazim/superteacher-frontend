@@ -1,35 +1,18 @@
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Modal, TextInput, Textarea, FileInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { showNotification } from "@mantine/notifications";
 import { useForm, Controller } from "react-hook-form";
 
-import { useFileProcessingHook } from "@/shared/hooks/useFileProcessingHook";
-import { useCreateStudyMaterialsMutation } from "@/shared/redux/rtk-apis/materials/materials.api";
-import { NotificationMessage } from "@/shared/utils/notificationMessage";
-
+import type { MaterialFormValues } from "../CreateMaterials.types";
 import { MaterialSchema } from "./helpers/material.validation";
 
 const LuFileEdit = dynamic(() => import("react-icons/lu").then((mod) => mod.LuFileEdit));
 
-type FormValues = {
-  title: string;
-  instructions: string;
-  dueDate: Date | null;
-  attachments?: File[];
-  classroomId: number;
-};
-
 export default function AddMaterials() {
-  const router = useRouter();
-  const classroomId = parseInt(router.query["id"] as string);
   const [opened, { open, close }] = useDisclosure(false);
-  const [createMaterials] = useCreateStudyMaterialsMutation();
-  const { FileProcessing } = useFileProcessingHook();
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<MaterialFormValues>({
     resolver: zodResolver(MaterialSchema),
     defaultValues: {
       title: "",
@@ -39,31 +22,9 @@ export default function AddMaterials() {
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
-    try {
-      const fileKeys = data.attachments?.length ? await FileProcessing(data.attachments) : [];
-      const parseDate = new Date(data.dueDate ?? "");
-
-      const materialForm = {
-        title: data.title,
-        instructions: data.instructions,
-        dueDate: parseDate,
-        attachments: fileKeys.length ? fileKeys : undefined,
-        classroom: classroomId,
-      };
-
-      const response = await createMaterials(materialForm).unwrap();
-      if (response.data) {
-        showNotification(NotificationMessage("Success", "Material created successfully"));
-        close();
-      } else {
-        showNotification(NotificationMessage("Error", "Material creation failed"));
-      }
-    } catch (error) {
-      showNotification(NotificationMessage("Error", "Material creation failed"));
-      console.error("File upload error:", error);
-    }
-  };
+  const onSubmit = (data: MaterialFormValues) =>
+    // todo -> implement submission logic here
+    data;
 
   return (
     <>
