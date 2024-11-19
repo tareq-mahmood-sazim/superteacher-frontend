@@ -19,10 +19,12 @@ export default function CreateSubmissionHook(materialId: number, closeButton: ()
 
   const onSubmit = (data: SubmissionFormData) => {
     try {
-      console.log(data);
+      // Todo -> submit the data
       closeButton();
+      return data;
     } catch (err) {
-      console.error("Error creating submission:", err);
+      // Todo -> handle the error with a notification
+      return data;
     }
   };
   return {

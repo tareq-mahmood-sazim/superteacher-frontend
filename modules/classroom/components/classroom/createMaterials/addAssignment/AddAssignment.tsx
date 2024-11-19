@@ -6,21 +6,14 @@ import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm, Controller } from "react-hook-form";
 
+import type { MaterialFormValues } from "../CreateMaterials.types";
 import { AssignmentSchema } from "./helpers/assignment.validation";
 
 const LuFileEdit = dynamic(() => import("react-icons/lu").then((mod) => mod.LuFileEdit));
 
-type FormValues = {
-  title: string;
-  instructions: string;
-  dueDate: Date | null;
-  attachments?: File[];
-  classroomId: number;
-};
-
 export default function AddAssignment() {
   const [opened, { open, close }] = useDisclosure(false);
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<MaterialFormValues>({
     resolver: zodResolver(AssignmentSchema),
     defaultValues: {
       title: "",
@@ -30,9 +23,10 @@ export default function AddAssignment() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-  };
+  const onSubmit = (data: MaterialFormValues) =>
+    // todo -> implement submission logic here
+     data
+  ;
 
   return (
     <>
