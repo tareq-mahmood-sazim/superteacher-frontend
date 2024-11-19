@@ -6,7 +6,7 @@ import { useLazySearchStudentsByNameQuery } from "@/shared/redux/rtk-apis/studen
 
 import type { IOption, IStudentProfile } from "./AddStudentToClassForm.types";
 
-export default function AddStudentOnClassroomForm() {
+export default function AddStudentToClassroomForm() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [options, setOptions] = useState<IOption[]>([]);
