@@ -25,7 +25,8 @@ export default function ScheduleExam() {
 
   const onSubmit = (data: MaterialFormValues) =>
     // todo -> implement submission logic here
-    data;
+    return data
+  }
   return (
     <>
       <Modal opened={opened} onClose={close} centered>
