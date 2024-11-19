@@ -2,9 +2,7 @@ import { Card, Group, Text } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 import CreateSubmissionModal from "@/modules/classroom/components/classroom/createSubmission";
-import GetSubmissions from "@/modules/classroom/components/classroom/getSubmissions";
 import type { TMaterial } from "@/shared/redux/rtk-apis/materials/materials.types";
-
 import { TRootState } from "@/shared/redux/store";
 
 import DownloadAttachments from "../downloadAttachments";
