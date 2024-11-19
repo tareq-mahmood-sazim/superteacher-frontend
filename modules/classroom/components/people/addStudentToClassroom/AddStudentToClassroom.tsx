@@ -2,7 +2,7 @@ import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { CiSquarePlus } from "react-icons/ci";
 
-import AddStudentOnClassroomForm from "@/modules/classroom/components/people/addStudentOnClassroomForm";
+import AddStudentOnClassroomForm from "@/modules/classroom/components/people/addStudentToClassroomForm";
 
 export default function AddStudentOnClassroom() {
   const [opened, { open, close }] = useDisclosure(false);
