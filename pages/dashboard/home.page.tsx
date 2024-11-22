@@ -22,6 +22,9 @@ export default function Home() {
     } else if (!user.claim) {
       router.push("/login");
     }
+    setTimeout(() => {
+      router.reload();
+    }, 4000);
   });
 
   return (
