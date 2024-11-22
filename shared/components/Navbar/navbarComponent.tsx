@@ -1,4 +1,3 @@
-import { Button } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
