@@ -3,6 +3,7 @@ import { getFromLocalStorage } from "@/shared/utils/localStorage";
 import projectApi from "../api.config";
 import { IClassroomRequest, IClassroomResponse } from "./classrooms.types";
 
+
 const CLASSROOMS_ENDPOINT = "/classrooms";
 
 const getAuthToken = () => {

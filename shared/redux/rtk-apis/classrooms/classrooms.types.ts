@@ -7,6 +7,11 @@ export interface IClassroomRequest {
 }
 
 export interface IClassroomResponse {
+  data: boolean;
+  message: string;
+  status: number;
+}
+export interface IClassroom {
   id: number;
   title: string;
   subject: string;

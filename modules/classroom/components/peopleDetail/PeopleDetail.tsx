@@ -22,7 +22,6 @@ function DeleteStudentPrompt({ id: userId, username }: { id: number; username?: 
   const handleDelete = async () => {
     try {
       await removeParticipant({ classroomId, studentId });
-      // router.reload();
     } catch (error) {
       console.error(error);
     }

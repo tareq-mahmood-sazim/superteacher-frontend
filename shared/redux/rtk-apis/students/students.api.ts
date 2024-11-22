@@ -35,6 +35,7 @@ const studentsApi = projectApi.injectEndpoints({
     }),
   }),
 });
+
 export const {
   useGetStudentsQuery,
   useGetStudentQuery,
