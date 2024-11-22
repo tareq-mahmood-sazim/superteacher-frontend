@@ -39,6 +39,28 @@ const classroomsApi = projectApi.injectEndpoints({
         },
       }),
     }),
+    addStudentInClassroom: builder.mutation<
+      IClassroomResponse,
+      { classroomid: string; studentId: string }
+    >({
+      query: (body) => ({
+        url: `${CLASSROOMS_ENDPOINT}/addParticipant`,
+        method: "POST",
+        body: body,
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+    }),
+    getParticipants: builder.query<IClassroom, string>({
+      query: (id: string) => ({
+        url: `${CLASSROOMS_ENDPOINT}/participants/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+    }),
   }),
 });
 

@@ -1,3 +1,5 @@
+
+import { TUserProfile } from "../users/users.types";
 export interface IClassroomRequest {
   title: string;
   subject: string;
@@ -16,5 +18,5 @@ export interface IClassroom {
   classTime: string;
   daysOfTheWeek: string[];
   teacher?: number;
-  students?: string[];
+  participants?: TUserProfile[];
 }
