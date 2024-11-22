@@ -13,7 +13,7 @@ export interface IUserData {
   userProfile: IUserProfile;
 }
 
-interface IUserProfile {
+export interface IUserProfile {
   id: number;
   createdAt: string;
   updatedAt: string;

@@ -1,11 +1,14 @@
 import projectApi from "../api.config";
 
-const STUDENTS_ENDPOINT = "/users";
+const STUDENTS_ENDPOINT = "/users/student";
 
 const studentsApi = projectApi.injectEndpoints({
   endpoints: (builder) => ({
     getStudents: builder.query({
       query: () => STUDENTS_ENDPOINT,
+    }),
+    searchStudentsByName: builder.query({
+      query: (name) => `${STUDENTS_ENDPOINT}/search/name/${name}`,
     }),
     getStudent: builder.query({
       query: (id) => `${STUDENTS_ENDPOINT}/${id}`,
@@ -32,4 +35,11 @@ const studentsApi = projectApi.injectEndpoints({
     }),
   }),
 });
-export const { useGetStudentsQuery, useGetStudentQuery, useCreateStudentMutation } = studentsApi;
+
+export const {
+  useGetStudentsQuery,
+  useGetStudentQuery,
+  useCreateStudentMutation,
+  useLazySearchStudentsByNameQuery,
+  useSearchStudentsByNameQuery,
+} = studentsApi;

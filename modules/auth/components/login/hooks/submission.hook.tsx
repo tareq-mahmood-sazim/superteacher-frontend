@@ -27,7 +27,6 @@ const useLoginSubmission = () => {
       }
     } catch (error) {
       showNotification(NotificationMessage("Error", "Server Error"));
-
       console.error(error);
     }
   };

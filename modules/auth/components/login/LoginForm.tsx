@@ -12,7 +12,6 @@ import loginSubmission from "./hooks/submission.hook";
 
 export default function LoginForm() {
   const { handleSubmit, isLoggingIn } = loginSubmission();
-
   const form = useForm({
     initialValues: {
       email: "",

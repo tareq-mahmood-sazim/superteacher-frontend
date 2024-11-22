@@ -12,7 +12,6 @@ export default function CreateClassModal({ buttonLabel }: ICreateClassModalProps
       <Modal opened={opened} onClose={close} centered>
         <CreateClassForm />
       </Modal>
-
       <Button
         variant="none"
         className="text-center text-white border-white border-1 bg-black"
