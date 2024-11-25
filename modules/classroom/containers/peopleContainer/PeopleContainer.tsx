@@ -1,6 +1,6 @@
 import { Divider } from "@mantine/core";
 
-import AddStudentOnClassroom from "@/modules/classroom/components/addStudentToClassroom";
+import AddStudentToClassroom from "@/modules/classroom/components/addStudentToClassroom";
 import PeopleDetail from "@/modules/classroom/components/peopleDetail";
 import type { IClassroomResponse } from "@/shared/redux/rtk-apis/classrooms/classrooms.types";
 
@@ -21,7 +21,7 @@ export default function PeopleContainer({
         <TeacherDetail id={owner} />
         <div className="flex flex-row justify-between gap-2">
           <h2 className="text-2xl font-bold">Students</h2>
-          <AddStudentOnClassroom />
+          <AddStudentToClassroom />
         </div>
         <Divider />
         {participants.map((participant) => (
