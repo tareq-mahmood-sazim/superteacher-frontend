@@ -33,7 +33,6 @@ export default function ClassroomContainer() {
     );
   }
   if (classroomData) {
-    console.log(classroomData.participants?.length);
     return (
       <div className="mx-8">
         <Tabs defaultValue="classroom">

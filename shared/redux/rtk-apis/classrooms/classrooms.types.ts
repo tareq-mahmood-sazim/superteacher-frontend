@@ -1,4 +1,3 @@
-
 import { TUserProfile } from "../users/users.types";
 export interface IClassroomRequest {
   title: string;
