@@ -1,6 +1,6 @@
 import { Divider } from "@mantine/core";
 
-import AddStudentOnClassroom from "@/modules/classroom/components/addStudentOnClassroom";
+import AddStudentOnClassroom from "@/modules/classroom/components/addStudentToClassroom";
 import PeopleDetail from "@/modules/classroom/components/peopleDetail";
 import type { IClassroomResponse } from "@/shared/redux/rtk-apis/classrooms/classrooms.types";
 

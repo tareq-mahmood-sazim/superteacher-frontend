@@ -10,10 +10,7 @@ import { IUserProfile } from "@/shared/redux/rtk-apis/profiles/profiles.types";
 import { useLazySearchStudentsByNameQuery } from "@/shared/redux/rtk-apis/students/students.api";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
-interface Option {
-  id: string;
-  label: string;
-}
+import { AddStudentFormOptionProps } from "./AddStudentToClassroomForm.types";
 
 export default function AddStudentOnClassroomForm({ onClose }: { onClose: () => void }) {
   const router = useRouter();
@@ -22,7 +19,7 @@ export default function AddStudentOnClassroomForm({ onClose }: { onClose: () => 
 
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(query);
-  const [options, setOptions] = useState<Option[]>([]);
+  const [options, setOptions] = useState<AddStudentFormOptionProps[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const [triggerSearch, { data, isLoading, isError }] = useLazySearchStudentsByNameQuery();
@@ -67,10 +64,10 @@ export default function AddStudentOnClassroomForm({ onClose }: { onClose: () => 
         studentIds: parsedSelectedOptions,
       }).unwrap();
       setSelectedOptions([]);
-      console.log(addedOnClassroom);
       showNotification(NotificationMessage("success", addedOnClassroom?.message ?? ""));
     } catch (error) {
-      console.error("Error adding students:", error);
+      console.error(error);
+      showNotification(NotificationMessage("Warning", "failed adding student"));
     }
   };
 
