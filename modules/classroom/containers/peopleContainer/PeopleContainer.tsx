@@ -25,7 +25,7 @@ export default function PeopleContainer({
         <TeacherDetail id={owner} />
         <div className="flex flex-row justify-between gap-2">
           <h2 className="text-2xl font-bold">Students</h2>
-          {claim === EUserRole.TEACHER ? <AddStudentOnClassroom /> : <p>&nbsp;</p>}
+          {claim === EUserRole.TEACHER ? <AddStudentToClassroom /> : <p>&nbsp;</p>}
         </div>
         <Divider />
         {participants.map((participant) => (
