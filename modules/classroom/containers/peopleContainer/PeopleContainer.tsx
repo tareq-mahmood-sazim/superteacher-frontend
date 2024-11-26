@@ -2,6 +2,7 @@ import { Divider } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 import AddStudentToClassroom from "@/modules/classroom/components/people/addStudentToClassroom";
+
 import PeopleDetail from "@/modules/classroom/components/people/peopleDetail";
 import TeacherDetail from "@/modules/classroom/components/people/teacherDetail";
 import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";

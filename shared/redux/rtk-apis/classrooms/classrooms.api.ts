@@ -78,6 +78,16 @@ const classroomsApi = projectApi.injectEndpoints({
       }),
       invalidatesTags: ["classroom"],
     }),
+    addMeetLink: builder.mutation<IClassroomResponse, { classroomId: number; meetLink: string }>({
+      query: (body) => ({
+        url: `${CLASSROOMS_ENDPOINT}/addMeetLink`,
+        method: "POST",
+        body: body,
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -88,6 +98,7 @@ export const {
   useGetClassroomsByTeacherQuery,
   useAddStudentInClassroomMutation,
   useRemoveParticipantFromClassroomMutation,
+  useAddMeetLinkMutation,
 } = classroomsApi;
 
 export default classroomsApi;

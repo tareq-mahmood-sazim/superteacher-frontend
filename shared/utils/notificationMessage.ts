@@ -9,6 +9,8 @@ export function NotificationMessage(type: string, message: string) {
         return "green";
       case "Warning":
         return "yellow";
+      case "loading":
+        return "blue";
       default:
         return "blue";
     }
