@@ -2,7 +2,6 @@ import projectApi from "../api.config";
 
 const TEACHERS_ENDPOINT = "/users/teacher";
 
-
 const teachersApi = projectApi.injectEndpoints({
   endpoints: (builder) => ({
     getTeachers: builder.query({

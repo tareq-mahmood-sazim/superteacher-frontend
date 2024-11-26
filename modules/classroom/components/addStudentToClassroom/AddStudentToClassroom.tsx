@@ -10,7 +10,10 @@ export default function AddStudentToClassroom() {
   return (
     <>
       <Modal opened={opened} onClose={close} centered>
-        <AddStudentToClassroomForm />
+        <div className="mx-4 px-4">
+          <h2 className="text-2xl font-bold mb-4 text-green-500">ENROLL A STUDENT</h2>
+          <AddStudentToClassroomForm onClose={close} />
+        </div>
       </Modal>
       <button onClick={open} className="text-green-500 rounded-md">
         <CiSquarePlus className="text-4xl" />

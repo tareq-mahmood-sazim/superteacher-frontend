@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { Loader, SimpleGrid, Text } from "@mantine/core";
 
 import { useGetClassroomsByTeacherQuery } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";

@@ -27,6 +27,7 @@ export default function ClassroomContainer() {
   if (isLoading) return <LoadingComponent visible />;
 
   if (isError) {
+    console.error(error);
     return (
       <div className="text-red-500">Failed to load classroom data. Please try again later.</div>
     );
