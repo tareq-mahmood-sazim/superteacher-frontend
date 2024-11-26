@@ -15,7 +15,7 @@ const GuardComponent = ({ children }: { children: React.ReactNode }) => (
   <AuthGuard allowedRoles={[EUserRole.STUDENT, EUserRole.TEACHER]}>{children}</AuthGuard>
 );
 
-GuardComponent.displayName = "StudentDashboardGuard";
+GuardComponent.displayName = "ClassroomDashboardGuard";
 Classroom.Guard = GuardComponent;
 
 export default Classroom;

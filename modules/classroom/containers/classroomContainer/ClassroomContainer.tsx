@@ -13,7 +13,7 @@ export default function ClassroomContainer() {
   const { id } = router.query;
   const classroomId = id as string;
 
-  const [getOneClassroom, { isLoading, isError, data: classroomData, error }] =
+  const [getOneClassroom, { isLoading, isError, data: classroomData }] =
     useLazyGetOneClassroomQuery();
 
   useEffect(() => {
@@ -26,16 +26,15 @@ export default function ClassroomContainer() {
 
   if (isLoading) return <LoadingComponent visible />;
 
-  if (isError) {
-    console.error(error);
+  if (isError)
     return (
       <div className="text-red-500">Failed to load classroom data. Please try again later.</div>
     );
-  }
+
   if (classroomData) {
     return (
       <div className="mx-8">
-        <Tabs defaultValue="classroom">
+        <Tabs defaultValue="stream">
           <Tabs.List grow className="text-white justify-center">
             <Tabs.Tab value="stream" color="teal" className="hover:bg-transparent">
               <span className="text-white">Stream</span>
@@ -48,7 +47,9 @@ export default function ClassroomContainer() {
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panel value="stream">stream tab content</Tabs.Panel>
+          <Tabs.Panel value="stream">
+            <p> stream container here </p>
+          </Tabs.Panel>
           <Tabs.Panel value="classwork">classwork tab content</Tabs.Panel>
           <Tabs.Panel value="people">
             <PeopleContainer

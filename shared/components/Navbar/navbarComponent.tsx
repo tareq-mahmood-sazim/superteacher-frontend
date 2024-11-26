@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Button } from "@mantine/core";
 import { useSelector } from "react-redux";
 
@@ -12,7 +14,11 @@ const NavbarComponent = () => {
   return (
     <div className="flex flex-row justify-between items-center h-16 shadow-md bg-[#0C0C0C]">
       <div className="flex flex-row items-center mx-4">
-        <h1 className="text-[24px]">Superteacher</h1>
+        <h1 className="text-[24px]">
+          <Link className="hover:font-bold hover:underline duration-300" href="/">
+            Superteacher
+          </Link>
+        </h1>
       </div>
       <div className="flex flex-row items-center mx-4">
         <Button variant="none" className="text-white border-white mx-[-12px]">

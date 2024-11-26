@@ -2,10 +2,9 @@ import Link from "next/link";
 
 import { Loader, SimpleGrid, Text } from "@mantine/core";
 
+import ClassroomCard from "@/modules/classroom/components/classroomCard";
+import CreateClassroomComponent from "@/modules/dashboard/teacher/components/CreateClassroom";
 import { useGetClassroomsByTeacherQuery } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
-
-import ClassroomCard from "../components/ClassroomCard";
-import CreateClassroomComponent from "../components/CreateClassroom/createClassroomComponent";
 
 export default function TeacherContainer() {
   const { data: classRoomData, isLoading } = useGetClassroomsByTeacherQuery();
