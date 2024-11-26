@@ -8,6 +8,8 @@ import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
 import type { IClassroomResponse } from "@/shared/redux/rtk-apis/classrooms/classrooms.types";
 import { TRootState } from "@/shared/redux/store";
 
+import TeacherDetail from "../../components/teacherDetail";
+
 export default function PeopleContainer({
   owner,
   participants,
