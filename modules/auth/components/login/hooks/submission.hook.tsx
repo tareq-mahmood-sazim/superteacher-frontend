@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { showNotification } from "@mantine/notifications";
 import { z } from "zod";
 
+import { useAppDispatch } from "@/shared/redux/hooks";
+
 import { setUser } from "@/shared/redux/reducers/user.reducer";
 import { useLoginMutation } from "@/shared/redux/rtk-apis/auth/auth.api";
 import { setInLocalStorage } from "@/shared/utils/localStorage";
@@ -13,6 +15,7 @@ import { loginSchema } from "../helpers/login.validation";
 const useLoginSubmission = () => {
   const [login, { isLoading: isLoggingIn }] = useLoginMutation();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
@@ -20,7 +23,7 @@ const useLoginSubmission = () => {
       if (response?.accessToken) {
         showNotification(NotificationMessage("Success", "Logged in successfully"));
         setInLocalStorage("accessToken", response.accessToken);
-        setUser(response.user);
+        dispatch(setUser(response.user));
         router.push("/dashboard/home");
       } else {
         showNotification(NotificationMessage("Warning", "Wrong Email or Password"));

@@ -5,7 +5,8 @@ import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import { useRemoveParticipantFromClassroomMutation } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
-import { useGetStudentQuery } from "@/shared/redux/rtk-apis/students/students.api";
+
+import { useProfileQuery } from "@/shared/redux/rtk-apis/profiles/profiles.api";
 
 import SelfUserDetail from "../selfUserDetail";
 
@@ -22,7 +23,6 @@ function DeleteStudentPrompt({ id: userId, username }: { id: number; username?: 
   const handleDelete = async () => {
     try {
       await removeParticipant({ classroomId, studentId });
-      // router.reload();
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +59,7 @@ function DeleteStudentPrompt({ id: userId, username }: { id: number; username?: 
 }
 
 export default function PeopleDetail({ id }: { id: number }) {
-  const { data, isLoading, isError } = useGetStudentQuery(id);
+  const { data, isLoading, isError } = useProfileQuery(id.toString());
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -69,7 +69,7 @@ export default function PeopleDetail({ id }: { id: number }) {
   }
 
   if (data) {
-    const { firstName, lastName, user } = data.data ?? {};
+    const { firstName, lastName } = data.userProfile ?? {};
 
     return (
       <div className="flex flex-row justify-between gap-2">
@@ -77,7 +77,7 @@ export default function PeopleDetail({ id }: { id: number }) {
           {firstName ?? ""} {lastName ?? ""} <SelfUserDetail id={id} />
         </p>
         <div className="flex flex-row justify-between gap-2">
-          <p>{user?.email ?? ""}</p>
+          <p>{data?.email ?? ""}</p>
           <DeleteStudentPrompt id={id} username={`${firstName} ${lastName}`} />
         </div>
       </div>
