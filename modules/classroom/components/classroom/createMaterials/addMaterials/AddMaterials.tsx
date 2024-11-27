@@ -11,7 +11,7 @@ export default function AddMaterials() {
   return (
     <>
       <Modal opened={opened} onClose={close} centered>
-        {/* Modal content */}
+        <div />
       </Modal>
 
       <Button onClick={open} className="bg-green-500 mx-2">

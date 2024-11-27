@@ -35,7 +35,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterialRequest>) => response.data,
     }),
-    createScheduleExam: builder.mutation<TMaterialRequest, string>({
+    scheduleExam: builder.mutation<TMaterialRequest, string>({
       query: (body) => ({
         url: `materials/schedule-exam`,
         method: "POST",
@@ -56,7 +56,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterialRequest>) => response.data,
     }),
-    getStudyMaterialsByClassroom: builder.query<TMaterialRequest, string>({
+    getStudyMaterialsByClassroomId: builder.query<TMaterialRequest, string>({
       query: (classroomId) => ({
         url: `materials/study-materials/${classroomId}`,
         method: "GET",
@@ -83,8 +83,8 @@ const materialsApi = projectApi.injectEndpoints({
 export const {
   useCreateAssignmentMutation,
   useCreateStudyMaterialMutation,
-  useCreateScheduleExamMutation,
+  useScheduleExamMutation,
   useGetAssignmentByClassroomQuery,
-  useGetStudyMaterialsByClassroomQuery,
+  useGetStudyMaterialsByClassroomIdQuery,
   useGetScheduleExamByClassroomIdQuery,
 } = materialsApi;
