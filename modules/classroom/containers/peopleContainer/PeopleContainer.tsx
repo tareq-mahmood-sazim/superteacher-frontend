@@ -2,15 +2,11 @@ import { Divider } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 import AddStudentToClassroom from "@/modules/classroom/components/people/addStudentToClassroom";
-
 import PeopleDetail from "@/modules/classroom/components/people/peopleDetail";
 import TeacherDetail from "@/modules/classroom/components/people/teacherDetail";
 import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
 import type { IClassroomResponse } from "@/shared/redux/rtk-apis/classrooms/classrooms.types";
 import { TRootState } from "@/shared/redux/store";
-
-
-import TeacherDetail from "../../components/teacherDetail";
 
 export default function PeopleContainer({
   owner,

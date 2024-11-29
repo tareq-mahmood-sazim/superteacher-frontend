@@ -4,7 +4,6 @@ import { showNotification } from "@mantine/notifications";
 import { z } from "zod";
 
 import { useAppDispatch } from "@/shared/redux/hooks";
-
 import { setUser } from "@/shared/redux/reducers/user.reducer";
 import { useLoginMutation } from "@/shared/redux/rtk-apis/auth/auth.api";
 import { setInLocalStorage } from "@/shared/utils/localStorage";
