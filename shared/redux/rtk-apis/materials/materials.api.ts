@@ -24,7 +24,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
     }),
-    createStudyMaterials: builder.mutation<TMaterials[], string>({
+    createStudyMaterial: builder.mutation<TMaterials[], string>({
       query: (body) => ({
         url: `materials/study-materials`,
         method: "POST",
@@ -35,7 +35,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
     }),
-    createScheduleExam: builder.mutation<TMaterials[], string>({
+    scheduleExam: builder.mutation<TMaterials[], string>({
       query: (body) => ({
         url: `materials/schedule-exam`,
         method: "POST",
@@ -56,7 +56,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
     }),
-    getStudyMaterialsByClassroom: builder.query<TMaterials[], number>({
+    getStudyMaterialsByClassroomId: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/study-materials/${classroomId}`,
         method: "GET",
@@ -66,7 +66,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
     }),
-    getScheduleExamByClassroom: builder.query<TMaterials[], number>({
+    getScheduleExamByClassroomId: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/schedule-exam/${classroomId}`,
         method: "GET",
@@ -116,8 +116,8 @@ export const {
   useCreateStudyMaterialsMutation,
   useCreateScheduleExamMutation,
   useGetAssignmentByClassroomQuery,
-  useGetStudyMaterialsByClassroomQuery,
-  useGetScheduleExamByClassroomQuery,
+  useGetStudyMaterialsByClassroomIdQuery,
+  useGetScheduleExamByClassroomIdQuery,
   useGetOneMaterialByIdQuery,
   useUpdateMaterialByIdMutation,
   useDeleteMaterialsMutation,
