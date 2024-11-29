@@ -15,7 +15,7 @@ const studentsApi = projectApi.injectEndpoints({
     }),
     createStudent: builder.mutation({
       query: (data) => ({
-        url: STUDENTS_ENDPOINT,
+        url: "users",
         method: "POST",
         body: data,
       }),

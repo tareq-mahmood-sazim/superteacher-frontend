@@ -5,7 +5,6 @@ import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import { useRemoveParticipantFromClassroomMutation } from "@/shared/redux/rtk-apis/classrooms/classrooms.api";
-
 import { useProfileQuery } from "@/shared/redux/rtk-apis/profiles/profiles.api";
 
 import SelfUserDetail from "../selfUserDetail";

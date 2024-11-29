@@ -1,22 +1,6 @@
 import projectApi from "../api.config";
+import { LoginResponse, LoginRequest, LogoutResponse } from "./login.types";
 
-interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-interface LoginResponse {
-  token: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-  };
-}
-
-interface LogoutResponse {
-  message: string;
-}
 const AUTH_ENDPOINT = "/auth";
 const authApi = projectApi.injectEndpoints({
   endpoints: (builder) => ({
