@@ -2,9 +2,15 @@ import { useMemo } from "react";
 
 import { io } from "socket.io-client";
 
-import { ACCESS_TOKEN_LOCAL_STORAGE_KEY } from "../constants/app.constants";
 import { WS_BASE_URL } from "../constants/env.constants";
 import { getFromLocalStorage } from "../utils/localStorage";
+
+const getAuthToken = () => {
+  if (typeof window !== "undefined") {
+    return getFromLocalStorage("accessToken");
+  }
+  return null;
+};
 
 export const useWebsocket = ({
   path,
@@ -16,8 +22,7 @@ export const useWebsocket = ({
   autoConnect?: boolean;
 }) => {
   const socket = useMemo(() => {
-    const accessToken = getFromLocalStorage<string>(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
-
+    const accessToken = getAuthToken();
     return io(WS_BASE_URL ?? "", {
       autoConnect,
       transports: ["websocket"],

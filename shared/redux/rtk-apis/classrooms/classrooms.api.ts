@@ -22,12 +22,14 @@ const classroomsApi = projectApi.injectEndpoints({
         },
         method: "POST",
         body: classroom,
+        invalidatesTags: ["classroom"],
       }),
     }),
     getOneClassroom: builder.query<IClassroomResponse, string>({
       query: (id: string) => ({
         url: `${CLASSROOMS_ENDPOINT}/${id}`,
         method: "GET",
+        invalidatesTags: ["classroom"],
       }),
       providesTags: () => ["classroom"],
     }),

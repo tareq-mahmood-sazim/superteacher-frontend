@@ -21,6 +21,7 @@ const useLoginSubmission = () => {
     try {
       const response = await login(values).unwrap();
       if (response?.accessToken) {
+        console.log(response.user);
         showNotification(NotificationMessage("Success", "Logged in successfully"));
         setInLocalStorage("accessToken", response.accessToken);
         dispatch(setUser(response.user));

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { useSelector } from "react-redux";
 
-import ClassroomCard from "@/modules/classroom/components/classroomCard";
+import ClassroomCard from "@/modules/classroom/components/classroom/classroomCard";
 import LoadingComponent from "@/shared/components/LoadingComponent";
 import { IClassroomResponse } from "@/shared/redux/rtk-apis/classrooms/classrooms.types";
 import { useGetStudentQuery } from "@/shared/redux/rtk-apis/students/students.api";
@@ -15,10 +15,8 @@ export default function StudentContainer() {
   if (studentLoading) return <LoadingComponent visible={false} />;
   if (data) {
     const studentData = data?.data;
-
     if (studentData.classrooms.length > 0) {
       const classRooms = studentData.classrooms;
-
       return (
         <>
           {classRooms.map((classroom: IClassroomResponse) => (
