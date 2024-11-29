@@ -24,7 +24,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterialRequest>) => response.data,
     }),
-    createStudyMaterials: builder.mutation<TMaterialRequest, string>({
+    createStudyMaterial: builder.mutation<TMaterialRequest, string>({
       query: (body) => ({
         url: `materials/study-materials`,
         method: "POST",
@@ -35,7 +35,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterialRequest>) => response.data,
     }),
-    createScheduleExam: builder.mutation<TMaterialRequest, string>({
+    scheduleExam: builder.mutation<TMaterialRequest, string>({
       query: (body) => ({
         url: `materials/schedule-exam`,
         method: "POST",
@@ -56,7 +56,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterialRequest>) => response.data,
     }),
-    getStudyMaterialsByClassroom: builder.query<TMaterialRequest, string>({
+    getStudyMaterialsByClassroomId: builder.query<TMaterialRequest, string>({
       query: (classroomId) => ({
         url: `materials/study-materials/${classroomId}`,
         method: "GET",
@@ -66,7 +66,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       transformResponse: (response: TApiResponse<TMaterialRequest>) => response.data,
     }),
-    getScheduleExamByClassroom: builder.query<TMaterialRequest, string>({
+    getScheduleExamByClassroomId: builder.query<TMaterialRequest, string>({
       query: (classroomId) => ({
         url: `materials/schedule-exam/${classroomId}`,
         method: "GET",
@@ -82,9 +82,9 @@ const materialsApi = projectApi.injectEndpoints({
 
 export const {
   useCreateAssignmentMutation,
-  useCreateStudyMaterialsMutation,
-  useCreateScheduleExamMutation,
+  useCreateStudyMaterialMutation,
+  useScheduleExamMutation,
   useGetAssignmentByClassroomQuery,
-  useGetStudyMaterialsByClassroomQuery,
-  useGetScheduleExamByClassroomQuery,
+  useGetStudyMaterialsByClassroomIdQuery,
+  useGetScheduleExamByClassroomIdQuery,
 } = materialsApi;

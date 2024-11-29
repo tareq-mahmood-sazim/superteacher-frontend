@@ -10,25 +10,15 @@ import { v4 as uuidv4 } from "uuid";
 import { useGetPresignedUrlMutation } from "@/shared/redux/rtk-apis/file-uploads/file-uploads.api";
 import { UploadToS3 } from "@/shared/utils/uploadFile";
 
+import type { TFormValues, TPresignedUrlResponse } from "./AddAssignment.types";
 import { AssignmentSchema } from "./helpers/assignment.validation";
 
 const LuFileEdit = dynamic(() => import("react-icons/lu").then((mod) => mod.LuFileEdit));
 
-type FormValues = {
-  title: string;
-  instructions: string;
-  dueDate: Date | null;
-  attachments: File[];
-};
-
-type PresignedUrlResponse = {
-  signedUrl: string;
-};
-
 export default function AddAssignment() {
   const [opened, { open, close }] = useDisclosure(false);
   const [uploadFile] = useGetPresignedUrlMutation();
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<TFormValues>({
     resolver: zodResolver(AssignmentSchema),
     defaultValues: {
       title: "",
@@ -38,7 +28,7 @@ export default function AddAssignment() {
     },
   });
 
-  const fileProcessing = async (data: FormValues): Promise<string[]> => {
+  const fileProcess = async (data: TFormValues): Promise<string[]> => {
     const files = data.attachments;
     if (files.length === 0) return [];
 
@@ -47,7 +37,7 @@ export default function AddAssignment() {
       type: file.type,
     }));
 
-    const response: PresignedUrlResponse[] = await uploadFile(fileData).unwrap();
+    const response: TPresignedUrlResponse[] = await uploadFile(fileData).unwrap();
     const uploadPromises = files.reduce<Promise<string>[]>((promises, file, index) => {
       const signedUrl = response[index]?.signedUrl;
       if (signedUrl) {
@@ -59,9 +49,9 @@ export default function AddAssignment() {
     return Promise.all(uploadPromises);
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: TFormValues) => {
     try {
-      const fileKeys = await fileProcessing(data);
+      const fileKeys = await fileProcess(data);
       const assignmentForm = {
         title: data.title,
         instructions: data.instructions,

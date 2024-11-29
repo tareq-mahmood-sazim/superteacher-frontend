@@ -20,15 +20,11 @@ export default function UserMessageDetail({ id, msg }: { id: number; msg: IMessa
       <div className="flex space-x-2 my-2">
         <div className="flex-1">
           <strong className="text-black">
-            {msg.senderType === EUserRole.TEACHER ? (
-              <span className="text-green-600">
-                {userData.userProfile.firstName} {userData.userProfile.lastName}
-              </span>
-            ) : (
-              <span className="text-black">
-                {userData.userProfile.firstName} {userData.userProfile.lastName}
-              </span>
-            )}
+            <span
+              className={msg.senderType === EUserRole.TEACHER ? "text-green-600" : "text-black"}
+            >
+              {userData.userProfile.firstName} {userData.userProfile.lastName}
+            </span>
             <p className="text-gray-500 text-sm">{formattedDate}</p>
           </strong>
         </div>
