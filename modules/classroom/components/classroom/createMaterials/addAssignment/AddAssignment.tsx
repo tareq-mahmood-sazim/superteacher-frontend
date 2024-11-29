@@ -5,71 +5,32 @@ import { Button, Modal, TextInput, Textarea, FileInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm, Controller } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 
-import { useGetPresignedUrlMutation } from "@/shared/redux/rtk-apis/file-uploads/file-uploads.api";
-import { UploadToS3 } from "@/shared/utils/uploadFile";
-
-import type { TFormValues, TPresignedUrlResponse } from "./AddAssignment.types";
+import type { TMaterialFormValues } from "../CreateMaterials.types";
 import { AssignmentSchema } from "./helpers/assignment.validation";
 
 const LuFileEdit = dynamic(() => import("react-icons/lu").then((mod) => mod.LuFileEdit));
 
 export default function AddAssignment() {
   const [opened, { open, close }] = useDisclosure(false);
-  const [uploadFile] = useGetPresignedUrlMutation();
-  const { control, handleSubmit } = useForm<TFormValues>({
+  const { control, handleSubmit } = useForm<TMaterialFormValues>({
     resolver: zodResolver(AssignmentSchema),
     defaultValues: {
       title: "",
       instructions: "",
-      dueDate: null,
+      dueDate: new Date(),
       attachments: [],
     },
   });
 
-  const fileProcess = async (data: TFormValues): Promise<string[]> => {
-    const files = data.attachments;
-    if (files.length === 0) return [];
-
-    const fileData = files.map((file) => ({
-      name: `${uuidv4()}_${file.name}`,
-      type: file.type,
-    }));
-
-    const response: TPresignedUrlResponse[] = await uploadFile(fileData).unwrap();
-    const uploadPromises = files.reduce<Promise<string>[]>((promises, file, index) => {
-      const signedUrl = response[index]?.signedUrl;
-      if (signedUrl) {
-        promises.push(UploadToS3(file, signedUrl));
-      }
-      return promises;
-    }, []);
-
-    return Promise.all(uploadPromises);
-  };
-
-  const onSubmit = async (data: TFormValues) => {
-    try {
-      const fileKeys = await fileProcess(data);
-      const assignmentForm = {
-        title: data.title,
-        instructions: data.instructions,
-        dueDate: data.dueDate,
-        attachments: fileKeys,
-      };
-      console.log(assignmentForm);
-      // Todo -> add api call here
-    } catch (error) {
-      // Todo -> throw error notification here
-      console.error("File upload error:", error);
-    }
-  };
-
+  const onSubmit = (data: TMaterialFormValues) =>
+    // todo -> implement submission logic here
+    data;
   return (
     <>
       <Modal opened={opened} onClose={close} centered>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <h2 className="text-xl font-bold mb-4 text-green-500">Add Assignment</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
           <Controller
             name="title"
             control={control}

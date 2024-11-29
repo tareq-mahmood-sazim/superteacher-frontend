@@ -1,4 +1,3 @@
-
 import projectApi from "../api.config";
 import { IMessageType } from "./messages.types";
 
