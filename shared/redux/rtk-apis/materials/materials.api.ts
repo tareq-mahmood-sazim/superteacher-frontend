@@ -113,8 +113,8 @@ const materialsApi = projectApi.injectEndpoints({
 
 export const {
   useCreateAssignmentMutation,
-  useCreateStudyMaterialsMutation,
-  useCreateScheduleExamMutation,
+  useCreateStudyMaterialMutation,
+  useScheduleExamMutation,
   useGetAssignmentByClassroomQuery,
   useGetStudyMaterialsByClassroomIdQuery,
   useGetScheduleExamByClassroomIdQuery,

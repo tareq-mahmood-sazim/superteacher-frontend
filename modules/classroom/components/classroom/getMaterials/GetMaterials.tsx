@@ -4,8 +4,8 @@ import { Accordion, Divider, Loader, Text } from "@mantine/core";
 
 import {
   useGetAssignmentByClassroomQuery,
-  useGetStudyMaterialsByClassroomQuery,
-  useGetScheduleExamByClassroomQuery,
+  useGetStudyMaterialsByClassroomIdQuery,
+  useGetScheduleExamByClassroomIdQuery,
 } from "@/shared/redux/rtk-apis/materials/materials.api";
 import type { TMaterials } from "@/shared/redux/rtk-apis/materials/materials.types";
 
@@ -40,9 +40,9 @@ export default function GetMaterials() {
   const { data: assignments, isLoading: loadingAssignments } =
     useGetAssignmentByClassroomQuery(classroomId);
   const { data: studyMaterials, isLoading: loadingStudyMaterials } =
-    useGetStudyMaterialsByClassroomQuery(classroomId);
+    useGetStudyMaterialsByClassroomIdQuery(classroomId);
   const { data: scheduleExams, isLoading: loadingExams } =
-    useGetScheduleExamByClassroomQuery(classroomId);
+    useGetScheduleExamByClassroomIdQuery(classroomId);
 
   const isLoading = loadingAssignments || loadingStudyMaterials || loadingExams;
   const hasError = !assignments || !studyMaterials || !scheduleExams;
