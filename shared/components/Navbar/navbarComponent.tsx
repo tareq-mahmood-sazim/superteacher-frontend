@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { Button } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
@@ -21,9 +20,12 @@ const NavbarComponent = () => {
         </h1>
       </div>
       <div className="flex flex-row items-center mx-4">
-        <Button variant="none" className="text-white border-white mx-[-12px]">
+        <Link
+          href="/dashboard/home"
+          className="text-white border-2 border-white px-2 py-1 rounded-sm"
+        >
           Dashboard
-        </Button>
+        </Link>
         {claim === EUserRole.TEACHER ? <CreateClassModal buttonLabel="+" /> : null}
         <ProfileDropdownMenu />
       </div>
