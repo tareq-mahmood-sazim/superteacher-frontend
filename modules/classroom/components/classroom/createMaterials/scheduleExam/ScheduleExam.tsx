@@ -6,14 +6,14 @@ import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm, Controller } from "react-hook-form";
 
-import type { MaterialFormValues } from "../CreateMaterials.types";
+import type { TMaterialFormValues } from "../CreateMaterials.types";
 import { ExamSchema } from "./helpers/exam.validation";
 
 const LuFileEdit = dynamic(() => import("react-icons/lu").then((mod) => mod.LuFileEdit));
 
 export default function ScheduleExam() {
   const [opened, { open, close }] = useDisclosure(false);
-  const { control, handleSubmit } = useForm<MaterialFormValues>({
+  const { control, handleSubmit } = useForm<TMaterialFormValues>({
     resolver: zodResolver(ExamSchema),
     defaultValues: {
       title: "",
@@ -23,7 +23,7 @@ export default function ScheduleExam() {
     },
   });
 
-  const onSubmit = (data: MaterialFormValues) =>
+  const onSubmit = (data: TMaterialFormValues) =>
     // todo -> implement submission logic here
     data;
 

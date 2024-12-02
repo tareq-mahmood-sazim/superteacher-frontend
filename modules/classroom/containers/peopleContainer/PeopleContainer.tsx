@@ -1,7 +1,7 @@
 import { Divider } from "@mantine/core";
 import { useSelector } from "react-redux";
 
-import AddStudentOnClassroom from "@/modules/classroom/components/people/addStudentOnClassroom";
+import AddStudentToClassroom from "@/modules/classroom/components/people/addStudentToClassroom";
 import PeopleDetail from "@/modules/classroom/components/people/peopleDetail";
 import TeacherDetail from "@/modules/classroom/components/people/teacherDetail";
 import { EUserRole } from "@/shared/redux/rtk-apis/auth/auth.types";
@@ -24,7 +24,7 @@ export default function PeopleContainer({
         <TeacherDetail id={owner} />
         <div className="flex flex-row justify-between gap-2">
           <h2 className="text-2xl font-bold">Students</h2>
-          {claim === EUserRole.TEACHER ? <AddStudentOnClassroom /> : <p>&nbsp;</p>}
+          {claim === EUserRole.TEACHER ? <AddStudentToClassroom /> : <p>&nbsp;</p>}
         </div>
         <Divider />
         {participants.map((participant) => (

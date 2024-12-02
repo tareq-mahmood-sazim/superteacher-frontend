@@ -1,7 +1,8 @@
+import { TApiResponse } from "@/shared/typedefs";
 import { getFromLocalStorage } from "@/shared/utils/localStorage";
 
 import projectApi from "../api.config";
-import { TMaterialRequest, TMaterialResponse, TMaterial } from "./materials.types";
+import type { TMaterials, TMaterialResponse, TMaterialRequest } from "./materials.types";
 
 const getAuthToken = () => {
   if (typeof window !== "undefined") {
@@ -23,7 +24,7 @@ const materialsApi = projectApi.injectEndpoints({
         },
       }),
     }),
-    createStudyMaterials: builder.mutation<TMaterialResponse, TMaterialRequest>({
+    createStudyMaterial: builder.mutation<TMaterialResponse, TMaterialRequest>({
       query: (body) => ({
         url: `materials/study-materials`,
         method: "POST",
@@ -33,8 +34,7 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-    }),
-    createScheduleExam: builder.mutation<TMaterialResponse, TMaterialRequest>({
+    scheduleExam: builder.mutation<TMaterialResponse, TMaterialRequest>({
       query: (body) => ({
         url: `materials/schedule-exam`,
         method: "POST",
@@ -44,8 +44,7 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-    }),
-    getAssignmentByClassroom: builder.query<TMaterial[], number>({
+    getAssignmentByClassroom: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/assignment/${classroomId}`,
         method: "GET",
@@ -55,7 +54,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       providesTags: () => ["materials"],
     }),
-    getStudyMaterialsByClassroom: builder.query<TMaterial[], number>({
+    getStudyMaterialsByClassroomId: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/study-materials/${classroomId}`,
         method: "GET",
@@ -65,7 +64,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       providesTags: () => ["materials"],
     }),
-    getScheduleExamByClassroom: builder.query<TMaterial[], number>({
+    getScheduleExamByClassroomId: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/schedule-exam/${classroomId}`,
         method: "GET",
@@ -112,11 +111,11 @@ const materialsApi = projectApi.injectEndpoints({
 
 export const {
   useCreateAssignmentMutation,
-  useCreateStudyMaterialsMutation,
-  useCreateScheduleExamMutation,
+  useCreateStudyMaterialMutation,
+  useScheduleExamMutation,
   useGetAssignmentByClassroomQuery,
-  useGetStudyMaterialsByClassroomQuery,
-  useGetScheduleExamByClassroomQuery,
+  useGetStudyMaterialsByClassroomIdQuery,
+  useGetScheduleExamByClassroomIdQuery,
   useGetOneMaterialByIdQuery,
   useUpdateMaterialByIdMutation,
   useDeleteMaterialsMutation,

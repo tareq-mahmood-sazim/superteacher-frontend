@@ -16,7 +16,7 @@ enum EMaterialsEnum {
   STUDYMATERIALS = "STUDYMATERIALS",
   EXAM = "EXAM",
 }
-export type TMaterial = {
+export type TMaterials = {
   id: number;
   submissions: TSubmissionProps[];
   createdAt: string;
@@ -39,5 +39,5 @@ export type TMaterialRequest = {
 export type TMaterialResponse = {
   statusCode: number;
   message: string;
-  data: TMaterial;
+  data: TMaterials;
 };
