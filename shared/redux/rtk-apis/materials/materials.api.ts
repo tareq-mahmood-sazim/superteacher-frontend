@@ -22,19 +22,18 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-    }),
-    createStudyMaterials: builder.mutation<TMaterialResponse, TMaterialRequest>({
+    createStudyMaterial: builder.mutation<TMaterialResponse, TMaterialRequest>({
       query: (body) => ({
         url: `materials/study-materials`,
         method: "POST",
         body,
+
         invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-    }),
-    createScheduleExam: builder.mutation<TMaterialResponse, TMaterialRequest>({
+    scheduleExam: builder.mutation<TMaterialResponse, TMaterialRequest>({
       query: (body) => ({
         url: `materials/schedule-exam`,
         method: "POST",
@@ -55,7 +54,7 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       providesTags: () => ["materials"],
     }),
-    getStudyMaterialsByClassroom: builder.query<TMaterials[], number>({
+    getStudyMaterialByClassroomId: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/study-materials/${classroomId}`,
         method: "GET",
@@ -65,7 +64,9 @@ const materialsApi = projectApi.injectEndpoints({
       }),
       providesTags: () => ["materials"],
     }),
-    getScheduleExamByClassroom: builder.query<TMaterials[], number>({
+      transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
+    }),
+    getScheduleExamByClassroomId: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/schedule-exam/${classroomId}`,
         method: "GET",
@@ -112,11 +113,11 @@ const materialsApi = projectApi.injectEndpoints({
 
 export const {
   useCreateAssignmentMutation,
-  useCreateStudyMaterialsMutation,
-  useCreateScheduleExamMutation,
+  useCreateStudyMaterialMutation,
+  useScheduleExamMutation,
   useGetAssignmentByClassroomQuery,
-  useGetStudyMaterialsByClassroomQuery,
-  useGetScheduleExamByClassroomQuery,
+  useGetStudyMaterialsByClassroomIdQuery,
+  useGetScheduleExamByClassroomIdQuery,
   useGetOneMaterialByIdQuery,
   useUpdateMaterialByIdMutation,
   useDeleteMaterialsMutation,

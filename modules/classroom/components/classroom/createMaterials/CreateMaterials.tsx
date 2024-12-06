@@ -12,18 +12,19 @@ const IoMdAdd = dynamic(() => import("react-icons/io").then((mod) => mod.IoMdAdd
 const IoMdClose = dynamic(() => import("react-icons/io").then((mod) => mod.IoMdClose));
 
 export default function CreateMaterials() {
-  const [appear, setAppear] = useState<boolean>(true);
+  const [areButtonsVisible, setAreButtonsVisible] = useState<boolean>(true);
+
   return (
     <div className="my-4 flex flex-col md:flex-row">
       <Button
         color="green"
-        onClick={() => setAppear(!appear)}
-        variant={appear ? "filled" : "outline"}
+        onClick={() => setAreButtonsVisible(!areButtonsVisible)}
+        variant={areButtonsVisible ? "filled" : "outline"}
       >
-        <span className="text-lg mr-2"> {appear ? <IoMdAdd /> : <IoMdClose />}</span>
-        {appear ? "Create" : "Close"}
+        <span className="text-lg mr-2"> {areButtonsVisible ? <IoMdAdd /> : <IoMdClose />}</span>
+        {areButtonsVisible ? "Create" : "Close"}
       </Button>
-      {!appear && <MaterialButtons />}
+      {!areButtonsVisible && <MaterialButtons />}
     </div>
   );
 }
