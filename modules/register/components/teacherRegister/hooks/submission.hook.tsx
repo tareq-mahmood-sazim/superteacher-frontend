@@ -5,8 +5,11 @@ import { useRouter } from "next/router";
 import { showNotification } from "@mantine/notifications";
 import { z } from "zod";
 
+import { useAppDispatch } from "@/shared/redux/hooks";
+import { setUser } from "@/shared/redux/reducers/user.reducer";
 import { useCreateTeacherMutation } from "@/shared/redux/rtk-apis/teachers/teachers.api";
 import type { TApiError } from "@/shared/typedefs";
+import { setInLocalStorage } from "@/shared/utils/localStorage";
 
 import { teacherFormSchema } from "../helpers/register.validation";
 
@@ -14,6 +17,7 @@ const useTeacherRegistration = () => {
   const [createTeacher, { isLoading: isCreatingTeacher }] = useCreateTeacherMutation();
   const [attemptsLeft, setAttemptsLeft] = useState<number>(3);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleSubmit = async (values: z.infer<typeof teacherFormSchema>) => {
@@ -33,7 +37,16 @@ const useTeacherRegistration = () => {
         message: response?.data?.message,
         color: "green",
       });
-      router.push("/auth/login");
+      dispatch(
+        setUser({
+          id: response?.data?.data?.id,
+          email: response?.data?.data?.email,
+          claimId: response?.data?.data?.userProfile?.role?.id,
+          claim: response?.data?.data?.userProfile?.role?.name,
+        }),
+      );
+      setInLocalStorage("accessToken", response?.data?.accessToken);
+      router.push("/dashboard/home");
     } catch (error: unknown) {
       const apiError = error as TApiError;
       if (apiError?.data?.message === "Wrong Unique Code") {

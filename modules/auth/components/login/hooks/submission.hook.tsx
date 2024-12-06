@@ -29,7 +29,8 @@ const useLoginSubmission = () => {
         showNotification(NotificationMessage("Warning", "Wrong Email or Password"));
       }
     } catch (error) {
-      showNotification(NotificationMessage("Error", "Server Error"));
+      const errorProps = error as { data: { message: string } };
+      showNotification(NotificationMessage("Error", errorProps.data.message));
       console.error(error);
     }
   };

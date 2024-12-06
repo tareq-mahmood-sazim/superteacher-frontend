@@ -1,19 +1,36 @@
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Modal, TextInput, Textarea, FileInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
 import { useForm, Controller } from "react-hook-form";
 
-import type { TMaterialFormValues } from "../CreateMaterials.types";
+import { useFileProcessingHook } from "@/shared/hooks/useFileProcessingHook";
+import { useCreateAssignmentMutation } from "@/shared/redux/rtk-apis/materials/materials.api";
+import { NotificationMessage } from "@/shared/utils/notificationMessage";
+
 import { AssignmentSchema } from "./helpers/assignment.validation";
 
 const LuFileEdit = dynamic(() => import("react-icons/lu").then((mod) => mod.LuFileEdit));
 
+type FormValues = {
+  title: string;
+  instructions: string;
+  dueDate: Date | null;
+  attachments?: File[];
+  classroomId: number;
+};
+
 export default function AddAssignment() {
+  const router = useRouter();
+  const classroomId = parseInt(router.query["id"] as string);
   const [opened, { open, close }] = useDisclosure(false);
-  const { control, handleSubmit } = useForm<TMaterialFormValues>({
+  const [createAssignment] = useCreateAssignmentMutation();
+  const { FileProcessing } = useFileProcessingHook();
+  const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(AssignmentSchema),
     defaultValues: {
       title: "",
@@ -23,9 +40,31 @@ export default function AddAssignment() {
     },
   });
 
-  const onSubmit = (data: TMaterialFormValues) =>
-    // todo -> implement submission logic here
-    data;
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const fileKeys = data.attachments?.length ? await FileProcessing(data.attachments) : [];
+      const parseDate = new Date(data.dueDate ?? "");
+
+      const assignmentForm = {
+        title: data.title,
+        instructions: data.instructions,
+        dueDate: parseDate,
+        attachments: fileKeys.length ? fileKeys : undefined,
+        classroom: classroomId,
+      };
+
+      const response = await createAssignment(assignmentForm).unwrap();
+      if (response.data) {
+        showNotification(NotificationMessage("Success", "Assignment created successfully"));
+      } else {
+        showNotification(NotificationMessage("Error", "Assignment creation failed"));
+      }
+    } catch (error) {
+      showNotification(NotificationMessage("Error", "Assignment creation failed"));
+      console.error("File upload error:", error);
+    }
+  };
+
   return (
     <>
       <Modal opened={opened} onClose={close} centered>

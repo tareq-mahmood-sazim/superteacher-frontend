@@ -1,8 +1,7 @@
-import { TApiResponse } from "@/shared/typedefs";
 import { getFromLocalStorage } from "@/shared/utils/localStorage";
 
 import projectApi from "../api.config";
-import type { TMaterials, TMaterialResponse, TMaterialRequest } from "./materials.types";
+import { TMaterialRequest, TMaterialResponse, TMaterials } from "./materials.types";
 
 const getAuthToken = () => {
   if (typeof window !== "undefined") {
@@ -13,38 +12,37 @@ const getAuthToken = () => {
 
 const materialsApi = projectApi.injectEndpoints({
   endpoints: (builder) => ({
-    createAssignment: builder.mutation<TMaterials[], string>({
+    createAssignment: builder.mutation<TMaterialResponse, TMaterialRequest>({
       query: (body) => ({
         url: `materials/assignment`,
         method: "POST",
         body,
+        invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-      transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
-    }),
-    createStudyMaterial: builder.mutation<TMaterials[], string>({
+    createStudyMaterial: builder.mutation<TMaterialResponse, TMaterialRequest>({
       query: (body) => ({
         url: `materials/study-materials`,
         method: "POST",
         body,
+
+        invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-      transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
-    }),
-    scheduleExam: builder.mutation<TMaterials[], string>({
+    scheduleExam: builder.mutation<TMaterialResponse, TMaterialRequest>({
       query: (body) => ({
         url: `materials/schedule-exam`,
         method: "POST",
         body,
+        invalidatesTags: ["materials"],
         headers: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-      transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
     }),
     getAssignmentByClassroom: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
@@ -54,9 +52,9 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-      transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
+      providesTags: () => ["materials"],
     }),
-    getStudyMaterialsByClassroomId: builder.query<TMaterials[], number>({
+    getStudyMaterialByClassroomId: builder.query<TMaterials[], number>({
       query: (classroomId) => ({
         url: `materials/study-materials/${classroomId}`,
         method: "GET",
@@ -64,6 +62,8 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
+      providesTags: () => ["materials"],
+    }),
       transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
     }),
     getScheduleExamByClassroomId: builder.query<TMaterials[], number>({
@@ -74,7 +74,7 @@ const materialsApi = projectApi.injectEndpoints({
           Authorization: `Bearer ${getAuthToken()}`,
         },
       }),
-      transformResponse: (response: TApiResponse<TMaterials[]>) => response.data,
+      providesTags: () => ["materials"],
     }),
     getOneMaterialById: builder.query({
       query: (id) => ({

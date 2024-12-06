@@ -13,6 +13,7 @@ const IoMdClose = dynamic(() => import("react-icons/io").then((mod) => mod.IoMdC
 
 export default function CreateMaterials() {
   const [areButtonsVisible, setAreButtonsVisible] = useState<boolean>(true);
+
   return (
     <div className="my-4 flex flex-col md:flex-row">
       <Button
