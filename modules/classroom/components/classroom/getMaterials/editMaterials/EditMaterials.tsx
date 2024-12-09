@@ -37,7 +37,7 @@ export default function EditMaterials({ id }: { id: number }) {
 
   useEffect(() => {
     if (materialData) {
-      const { title, instructions, dueDate, attachments, classroom } = materialData;
+      const { title, instructions, dueDate, attachments, classroom } = materialData.data;
       form.setValues({
         title,
         instructions,

@@ -5,12 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Modal, TextInput, Textarea, FileInput } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
-
 import { showNotification } from "@mantine/notifications";
 import { useForm, Controller } from "react-hook-form";
 
 import { useFileProcessingHook } from "@/shared/hooks/useFileProcessingHook";
-import { useCreateScheduleExamMutation } from "@/shared/redux/rtk-apis/materials/materials.api";
+import { useScheduleExamMutation } from "@/shared/redux/rtk-apis/materials/materials.api";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import { ExamSchema } from "./helpers/exam.validation";
@@ -29,7 +28,7 @@ export default function ScheduleExam() {
   const router = useRouter();
   const classroomId = parseInt(router.query["id"] as string);
   const [opened, { open, close }] = useDisclosure(false);
-  const [createExams] = useCreateScheduleExamMutation();
+  const [createExams] = useScheduleExamMutation();
   const { FileProcessing } = useFileProcessingHook();
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(ExamSchema),

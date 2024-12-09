@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Modal, TextInput, Textarea, FileInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -9,7 +8,7 @@ import { showNotification } from "@mantine/notifications";
 import { useForm, Controller } from "react-hook-form";
 
 import { useFileProcessingHook } from "@/shared/hooks/useFileProcessingHook";
-import { useCreateStudyMaterialsMutation } from "@/shared/redux/rtk-apis/materials/materials.api";
+import { useCreateStudyMaterialMutation } from "@/shared/redux/rtk-apis/materials/materials.api";
 import { NotificationMessage } from "@/shared/utils/notificationMessage";
 
 import { MaterialSchema } from "./helpers/material.validation";
@@ -28,7 +27,7 @@ export default function AddMaterials() {
   const router = useRouter();
   const classroomId = parseInt(router.query["id"] as string);
   const [opened, { open, close }] = useDisclosure(false);
-  const [createMaterials] = useCreateStudyMaterialsMutation();
+  const [createMaterials] = useCreateStudyMaterialMutation();
   const { FileProcessing } = useFileProcessingHook();
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(MaterialSchema),
